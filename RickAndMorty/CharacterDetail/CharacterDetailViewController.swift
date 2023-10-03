@@ -10,7 +10,6 @@ import SnapKit
 
 class CharacterDetailViewController: UIViewController {
     
-    
     //MARK: - Properties
     var viewModel: CharacterDetailViewModel? {
         didSet {
@@ -23,7 +22,6 @@ class CharacterDetailViewController: UIViewController {
             mainImageView.image = UIImage(data: imageData)
         }
     }
-    
     
     //MARK: - UIConstants
     private enum UIConstants {
@@ -38,7 +36,6 @@ class CharacterDetailViewController: UIViewController {
         static let mainStackViewHeight: CGFloat = 120
     }
     
-    
     //MARK: - DefaultText
     private enum DefaultText: String {
         case unknow = "Unknow"
@@ -47,7 +44,6 @@ class CharacterDetailViewController: UIViewController {
         case status = "Status:"
         case favoritesButton = "star.fill"
     }
-    
     
     //MARK: - Private properties
     private let mainImageView: UIImageView = {
@@ -148,7 +144,6 @@ class CharacterDetailViewController: UIViewController {
         configureUI()
     }
 }
-
 
 //MARK: - Private methods
 private extension CharacterDetailViewController {

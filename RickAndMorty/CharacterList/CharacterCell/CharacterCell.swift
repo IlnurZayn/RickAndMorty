@@ -22,7 +22,7 @@ class CharacterCell: UICollectionViewCell {
     }
     
     //MARK: - UIConstants
-    private enum UIConstants {
+    private enum UIConstant {
         static let nameLabelFontSize: CGFloat = 26.0
         static let statusLabelFontSize: CGFloat = 17.0
         static let characterImageViewWidth: CGFloat = 100.0
@@ -55,7 +55,7 @@ class CharacterCell: UICollectionViewCell {
         statusView.clipsToBounds = true
         statusView.contentMode = .scaleAspectFill
         statusView.backgroundColor = .indicatorGrayColor
-        statusView.layer.cornerRadius = UIConstants.statusViewSize / 2
+        statusView.layer.cornerRadius = UIConstant.statusViewSize / 2
         return statusView
     }()
     
@@ -64,7 +64,7 @@ class CharacterCell: UICollectionViewCell {
         characterNameLabel.isUserInteractionEnabled = false
         characterNameLabel.textColor = .textColor
         characterNameLabel.text = "Unknow"
-        characterNameLabel.font = .boldSystemFont(ofSize: UIConstants.nameLabelFontSize)
+        characterNameLabel.font = .boldSystemFont(ofSize: UIConstant.nameLabelFontSize)
         return characterNameLabel
     }()
     
@@ -73,7 +73,7 @@ class CharacterCell: UICollectionViewCell {
         statusLabel.isUserInteractionEnabled = false
         statusLabel.textColor = .textColor
         statusLabel.text = "Unknow"
-        statusLabel.font = .systemFont(ofSize: UIConstants.statusLabelFontSize)
+        statusLabel.font = .systemFont(ofSize: UIConstant.statusLabelFontSize)
         return statusLabel
     }()
     
@@ -93,33 +93,33 @@ private extension CharacterCell {
 
     func configureUI() {
         
-        self.layer.cornerRadius = UIConstants.cornerRadiusSize
+        self.layer.cornerRadius = UIConstant.cornerRadiusSize
         self.clipsToBounds = true
         
         contentView.addSubview(characterImageView)
         characterImageView.snp.makeConstraints { make in
             make.top.bottom.leading.equalToSuperview()
-            make.width.equalTo(UIConstants.characterImageViewWidth)
+            make.width.equalTo(UIConstant.characterImageViewWidth)
         }
         
         contentView.addSubview(characterNameLabel)
         characterNameLabel.snp.makeConstraints { make in
-            make.leading.equalTo(characterImageView.snp.trailing).offset(UIConstants.imageToLabelOffset)
-            make.top.trailing.equalToSuperview().inset(UIConstants.nameLabelInset)
-            make.height.equalTo(UIConstants.nameLabelHeight)
+            make.leading.equalTo(characterImageView.snp.trailing).offset(UIConstant.imageToLabelOffset)
+            make.top.trailing.equalToSuperview().inset(UIConstant.nameLabelInset)
+            make.height.equalTo(UIConstant.nameLabelHeight)
         }
         
         contentView.addSubview(statusView)
         statusView.snp.makeConstraints { make in
             make.leading.equalTo(characterNameLabel.snp.leading)
-            make.width.height.equalTo(UIConstants.statusViewSize)
-            make.centerY.equalTo(characterNameLabel.snp.bottom).offset(UIConstants.statusViewCenterToNameLabelOffset)
+            make.width.height.equalTo(UIConstant.statusViewSize)
+            make.centerY.equalTo(characterNameLabel.snp.bottom).offset(UIConstant.statusViewCenterToNameLabelOffset)
         }
         
         contentView.addSubview(statusLabel)
         statusLabel.snp.makeConstraints { make in
-            make.leading.equalTo(statusView.snp.trailing).offset(UIConstants.statusViewToStatusLabelOffset)
-            make.centerY.equalTo(characterNameLabel.snp.bottom).offset(UIConstants.statusViewCenterToNameLabelOffset)
+            make.leading.equalTo(statusView.snp.trailing).offset(UIConstant.statusViewToStatusLabelOffset)
+            make.centerY.equalTo(characterNameLabel.snp.bottom).offset(UIConstant.statusViewCenterToNameLabelOffset)
         }
     }
 }

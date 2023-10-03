@@ -9,16 +9,14 @@ import UIKit
 
 class CharacterViewController: UIViewController {
     
-    
     //MARK: - UIConstants
-    private enum UIConstants {
+    private enum UIConstant {
         static let cellHeight: CGFloat = 80.0
         static let cellWidthInset = 16.0
         static let fromSuperViewToCollectionViewInset: CGFloat = 16.0
-        static let edgeInset: CGFloat = 16.0
+        static let itemsEdgeInset: CGFloat = 16.0
         static let minimumLineSpacing: CGFloat = 16.0
     }
-    
     
     //MARK: - Private properties
     private var viewModel: CharacterListViewModel! {
@@ -57,7 +55,6 @@ class CharacterViewController: UIViewController {
         return searchBar
     }()
     
-    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +62,6 @@ class CharacterViewController: UIViewController {
         configureUI()
     }
 }
-
 
 //MARK: - Private methods
 private extension CharacterViewController {
@@ -86,7 +82,6 @@ private extension CharacterViewController {
     }
 }
 
-
 //MARK: - UITableViewDelegate
 extension CharacterViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -95,7 +90,6 @@ extension CharacterViewController: UICollectionViewDelegate {
         navigationController?.pushViewController(characterDetailViewController, animated: true)
     }
 }
-
 
 //MARK: - UITableViewDataSource
 extension CharacterViewController: UICollectionViewDataSource {
@@ -114,22 +108,21 @@ extension CharacterViewController: UICollectionViewDataSource {
     }
 }
 
-
 //MARK: - UICollectionViewDelegateFlowLayout
 extension CharacterViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let cellWidth = collectionView.bounds.width - UIConstants.cellWidthInset * 2
+        let cellWidth = collectionView.frame.width - UIConstant.cellWidthInset * 2
         
-        return CGSize(width: cellWidth, height: UIConstants.cellHeight)
+        return CGSize(width: cellWidth, height: UIConstant.cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: UIConstants.edgeInset, left: UIConstants.edgeInset, bottom: UIConstants.edgeInset, right: UIConstants.edgeInset)
+        return UIEdgeInsets(top: UIConstant.itemsEdgeInset, left: UIConstant.itemsEdgeInset, bottom: UIConstant.itemsEdgeInset, right: UIConstant.itemsEdgeInset)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return UIConstants.minimumLineSpacing
+        return UIConstant.minimumLineSpacing
     }
 }

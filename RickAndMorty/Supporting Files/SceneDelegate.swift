@@ -73,8 +73,8 @@ private extension SceneDelegate {
             return navigationController
         }()
         
-        let favoritesViewController: FavoritesViewController = {
-            let favoritesViewController = FavoritesViewController()
+        let favoritesViewController: FavoritesListViewController = {
+            let favoritesViewController = FavoritesListViewController()
             favoritesViewController.title = TabBarItemConstants.favoritesTitle.rawValue
             favoritesViewController.tabBarItem = UITabBarItem(title: TabBarItemConstants.favoritesTitle.rawValue,
                                                               image: UIImage(systemName: TabBarItemConstants.favoritesImage.rawValue),
