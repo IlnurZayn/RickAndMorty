@@ -47,13 +47,10 @@ class CharacterViewController: UIViewController {
         let searchBar = UISearchBar()
         let characters = ["Rick Sanchez", "Morty Smith"]
         let placeholer = characters.randomElement()
-        
-        
-        
         searchBar.searchBarStyle = .minimal
         searchBar.tintColor = .acid
         searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: placeholer ?? "",
-                                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.indicatorGrayColor])
+                                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.indicatorGrayColor as Any])
         searchBar.searchTextField.leftView?.tintColor = .acidColor
         searchBar.searchTextField.clearButtonMode = .whileEditing
         searchBar.searchTextField.textColor = .acidColor
@@ -93,8 +90,9 @@ private extension CharacterViewController {
 //MARK: - UITableViewDelegate
 extension CharacterViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = CharacterDetailViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        let characterDetailViewController = CharacterDetailViewController()
+        characterDetailViewController.viewModel = viewModel.viewModelForSelectedItem(at: indexPath) as? CharacterDetailViewModel
+        navigationController?.pushViewController(characterDetailViewController, animated: true)
     }
 }
 

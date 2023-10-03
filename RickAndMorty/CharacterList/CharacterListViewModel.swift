@@ -15,7 +15,7 @@ protocol CharacterListViewModelProtocol: AnyObject {
     func fetchCharacters(completion: @escaping () -> Void)
     func numberOfItems() -> Int
     func cellViewModel(at indexPath: IndexPath) -> CharacterCellViewModelProtocol
-    func viewModelForSelectedRow(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol
+    func viewModelForSelectedItem(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol
 }
 
 class CharacterListViewModel: CharacterListViewModelProtocol {
@@ -61,7 +61,7 @@ class CharacterListViewModel: CharacterListViewModelProtocol {
         return CharacterCellViewModel(character: character)
     }
     
-    func viewModelForSelectedRow(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol {
+    func viewModelForSelectedItem(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol {
         let character = characters[indexPath.item]
         return CharacterDetailViewModel(character: character)
     }
