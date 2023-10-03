@@ -46,7 +46,7 @@ class CharacterViewController: UIViewController {
         let characters = ["Rick Sanchez", "Morty Smith"]
         let placeholer = characters.randomElement()
         searchBar.searchBarStyle = .minimal
-        searchBar.tintColor = .acid
+        searchBar.tintColor = .acidColor
         searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: placeholer ?? "",
                                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.indicatorGrayColor as Any])
         searchBar.searchTextField.leftView?.tintColor = .acidColor
@@ -103,7 +103,7 @@ extension CharacterViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterCell.identifier, 
                                                             for: indexPath) as? CharacterCell else { return UICollectionViewCell() }
         
-        cell.backgroundColor = .backgroundGray
+        cell.backgroundColor = .backgroundGrayColor
         cell.viewModel = viewModel.cellViewModel(at: indexPath)
         
         return cell
