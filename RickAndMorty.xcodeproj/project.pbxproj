@@ -29,6 +29,7 @@
 		46D234BB2ACC56B000F2FC0D /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234BA2ACC56B000F2FC0D /* FavoriteCell.swift */; };
 		46D234BD2ACC578400F2FC0D /* FavoriteCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234BC2ACC578400F2FC0D /* FavoriteCellViewModel.swift */; };
 		46D234BF2ACC657B00F2FC0D /* FavoritesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234BE2ACC657B00F2FC0D /* FavoritesListViewModel.swift */; };
+		46D234C12ACC7A6100F2FC0D /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234C02ACC7A6100F2FC0D /* DataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		46D234BA2ACC56B000F2FC0D /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		46D234BC2ACC578400F2FC0D /* FavoriteCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCellViewModel.swift; sourceTree = "<group>"; };
 		46D234BE2ACC657B00F2FC0D /* FavoritesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesListViewModel.swift; sourceTree = "<group>"; };
+		46D234C02ACC7A6100F2FC0D /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 			children = (
 				46D234AD2AC9C6A800F2FC0D /* NetworkService.swift */,
 				46D234B72ACA169400F2FC0D /* ImageManager.swift */,
+				46D234C02ACC7A6100F2FC0D /* DataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				46D234AE2AC9C6A800F2FC0D /* NetworkService.swift in Sources */,
 				46D234B32ACA083500F2FC0D /* CharacterCellViewModel.swift in Sources */,
 				46D234822AC76CF800F2FC0D /* CharacterViewController.swift in Sources */,
+				46D234C12ACC7A6100F2FC0D /* DataManager.swift in Sources */,
 				46D2347E2AC76CF800F2FC0D /* AppDelegate.swift in Sources */,
 				46D234802AC76CF800F2FC0D /* SceneDelegate.swift in Sources */,
 				46D234A12AC8350B00F2FC0D /* CharacterCell.swift in Sources */,
