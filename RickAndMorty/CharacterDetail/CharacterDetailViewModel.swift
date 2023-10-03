@@ -13,8 +13,12 @@ protocol CharacterDetailViewModelProtocol: AnyObject {
     var gender: String { get }
     var status: String { get }
     var imageData: Data? { get }
+    var isFavorite: Bool { get }
+    var viewModelDidChange: ((CharacterDetailViewModelProtocol) -> Void)? { get }
     
     init(character: Character)
+    
+    func favoriteButtonPressed()
 }
 
 class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
@@ -39,9 +43,25 @@ class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
         ImageManager.shared.fetchImageData(from: character.image)
     }
     
+    var isFavorite: Bool {
+        get {
+            DataManager.shared.getFavoriteStatus(for: character.name)
+        }
+        set {
+            DataManager.shared.setFavoriteStatus(for: character.name, with: newValue)
+            viewModelDidChange?(self)
+        }
+    }
+    
+    var viewModelDidChange: ((CharacterDetailViewModelProtocol) -> Void)?
+    
     private let character: Character
     
     required init(character: Character) {
         self.character = character
+    }
+    
+    func favoriteButtonPressed() {
+        isFavorite.toggle()
     }
 }

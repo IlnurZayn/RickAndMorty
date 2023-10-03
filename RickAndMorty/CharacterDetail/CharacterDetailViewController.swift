@@ -11,8 +11,14 @@ import SnapKit
 class CharacterDetailViewController: UIViewController {
     
     //MARK: - Properties
-    var viewModel: CharacterDetailViewModel? {
+    var viewModel: CharacterDetailViewModel! {
         didSet {
+            viewModel.viewModelDidChange = { [unowned self] viewModel in
+                setStatusForFavoriteButton()
+            }
+            
+            setStatusForFavoriteButton()
+            
             nameLabel.text = viewModel?.name
             spaciesLabel.text = viewModel?.species
             genderLabel.text = viewModel?.gender
@@ -132,12 +138,17 @@ class CharacterDetailViewController: UIViewController {
     }()
     
     private let favoriteBarButtonItem: UIBarButtonItem = {
-        let favoriteBarButtonItem = UIBarButtonItem()
+        let favoriteBarButtonItem = UIBarButtonItem()//image: UIImage(systemName: DefaultText.favoritesButton.rawValue),
+                                                    //style: .done,
+                                                    //target: self,
+                                                    //action: #selector(toggleFavorite(sender:)))
         favoriteBarButtonItem.image = UIImage(systemName: DefaultText.favoritesButton.rawValue)
+        favoriteBarButtonItem.action = #selector(toggleFavorite)
         favoriteBarButtonItem.tintColor = .indicatorGray
         return favoriteBarButtonItem
     }()
     
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -153,6 +164,7 @@ private extension CharacterDetailViewController {
         self.view.backgroundColor = .backgroundDarkGray
         navigationController?.navigationBar.isHidden = false
         navigationItem.rightBarButtonItem = favoriteBarButtonItem
+        favoriteBarButtonItem.target = self
 
         let mainStackView = UIStackView()
         view.addSubview(mainStackView)
@@ -206,5 +218,14 @@ private extension CharacterDetailViewController {
         statusStackView.distribution = .equalSpacing
         statusStackView.addArrangedSubview(statusTextLabel)
         statusStackView.addArrangedSubview(statusLabel)
+    }
+    
+    func setStatusForFavoriteButton() {
+        favoriteBarButtonItem.tintColor = viewModel.isFavorite ? .acidColor : .indicatorGrayColor
+    }
+    
+    //MARK: - Objc
+    @objc func toggleFavorite() {
+        viewModel?.favoriteButtonPressed()
     }
 }

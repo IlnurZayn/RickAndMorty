@@ -51,6 +51,7 @@ class CharacterViewController: UIViewController {
                                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.indicatorGrayColor as Any])
         searchBar.searchTextField.leftView?.tintColor = .acidColor
         searchBar.searchTextField.clearButtonMode = .whileEditing
+        searchBar.showsCancelButton = true
         searchBar.searchTextField.textColor = .acidColor
         return searchBar
     }()
@@ -71,6 +72,7 @@ private extension CharacterViewController {
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.isHidden = false
         navigationItem.titleView = searchBar
+        searchBar.delegate = self
         viewModel = CharacterListViewModel()
 
         characterCollectionView.dataSource = self
@@ -124,5 +126,16 @@ extension CharacterViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return UIConstant.minimumLineSpacing
+    }
+}
+
+//MARK: - UISearchBarDelegate
+extension CharacterViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }

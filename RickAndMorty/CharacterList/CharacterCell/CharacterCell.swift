@@ -16,9 +16,17 @@ class CharacterCell: UICollectionViewCell {
         didSet {
             characterNameLabel.text = viewModel.name
             statusLabel.text = viewModel.fullStatus
+            setStatusViewBackgroundColor(status: viewModel.status)
             guard let imageData = viewModel.imageData else { return }
             characterImageView.image = UIImage(data: imageData) ?? UIImage(named: "Unknow")
         }
+    }
+    
+    //MARK: - Status
+    private enum Status: String {
+        case alive = "Alive"
+        case dead = "Dead"
+        case unknown = "unknown"
     }
     
     //MARK: - UIConstants
@@ -120,6 +128,17 @@ private extension CharacterCell {
         statusLabel.snp.makeConstraints { make in
             make.leading.equalTo(statusView.snp.trailing).offset(UIConstant.statusViewToStatusLabelOffset)
             make.centerY.equalTo(characterNameLabel.snp.bottom).offset(UIConstant.statusViewCenterToNameLabelOffset)
+        }
+    }
+    
+    func setStatusViewBackgroundColor(status: String) {
+        switch status {
+        case Status.alive.rawValue:
+            statusView.backgroundColor = .indicatorGreen
+        case Status.dead.rawValue:
+            statusView.backgroundColor = .indicatorRed
+        default:
+            statusView.backgroundColor = .indicatorGray
         }
     }
 }

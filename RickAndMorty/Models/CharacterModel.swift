@@ -38,9 +38,3 @@ struct Location: Decodable {
 struct Origin: Decodable{
     let name: String
 }
-
-//enum Status: String, Decodable {
-//    case alive = "Alive"
-//    case dead = "Dead"
-//    case unknown = "unknown"
-//}
