@@ -34,21 +34,19 @@ class CharacterListViewModel: CharacterListViewModelProtocol {
     func fetchCharacters(completion: @escaping () -> Void) {
         
         guard let pages = self.pages else { return }
-        
-        let dispatchGroup = DispatchGroup()
-        
+
         for page in 1...pages {
-            
+            let dispatchGroup = DispatchGroup()
             dispatchGroup.enter()
             
             NetworkService.shared.fetchData(with: pageUrl + "\(page)", dataType: CharacterModel.self) { result in
                 self.characters.append(contentsOf: result.results)
                 dispatchGroup.leave()
             }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            completion()
+            
+            dispatchGroup.notify(queue: .main) {
+                completion()
+            }
         }
     }
     
