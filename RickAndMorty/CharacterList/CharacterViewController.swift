@@ -16,6 +16,9 @@ class CharacterViewController: UIViewController {
         static let fromSuperViewToCollectionViewInset: CGFloat = 16.0
         static let itemsEdgeInset: CGFloat = 16.0
         static let minimumLineSpacing: CGFloat = 16.0
+        static let segmentedControlBottomInset: CGFloat = 50.0
+        static let segmentedControlSidesInset: CGFloat = 80.0
+        static let segments = ["All", "Favorit"]
     }
     
     //MARK: - Private properties
@@ -56,6 +59,15 @@ class CharacterViewController: UIViewController {
         return searchBar
     }()
     
+    private let segmentedControl: UISegmentedControl = {
+        let segmentedControl = UISegmentedControl(items: UIConstant.segments)
+        segmentedControl.backgroundColor = .backgroundDarkGray
+        segmentedControl.selectedSegmentTintColor = .acidColor
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.tintColor = .red
+        return segmentedControl
+    }()
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +92,12 @@ private extension CharacterViewController {
         view.addSubview(characterCollectionView)
         characterCollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        view.addSubview(segmentedControl)
+        segmentedControl.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(UIConstant.segmentedControlBottomInset)
+            make.leading.trailing.equalToSuperview().inset(UIConstant.segmentedControlSidesInset)
         }
     }
 }
