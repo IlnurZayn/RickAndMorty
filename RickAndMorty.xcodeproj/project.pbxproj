@@ -82,7 +82,7 @@
 		46D2347C2AC76CF800F2FC0D /* RickAndMorty */ = {
 			isa = PBXGroup;
 			children = (
-				46D234982AC76FFC00F2FC0D /* Models */,
+				46D234982AC76FFC00F2FC0D /* Model */,
 				46D234AF2ACA06AC00F2FC0D /* CharacterList */,
 				46D234B42ACA08DC00F2FC0D /* CharacterDetail */,
 				46D234AC2AC9C69100F2FC0D /* Managers */,
@@ -113,12 +113,12 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		46D234982AC76FFC00F2FC0D /* Models */ = {
+		46D234982AC76FFC00F2FC0D /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				46D234A72AC98E5300F2FC0D /* CharacterModel.swift */,
 			);
-			path = Models;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		46D2349B2AC7701700F2FC0D /* CharacterCell */ = {

@@ -61,11 +61,10 @@ class CharacterViewController: UIViewController {
     
     private let segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: UIConstant.segments)
-        segmentedControl.backgroundColor = .backgroundDarkGray
+        segmentedControl.backgroundColor = .backgroundGrayColor
         segmentedControl.selectedSegmentTintColor = .acidColor
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.tintColor = .red
-        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(sender:)), for: .valueChanged)
+        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         return segmentedControl
     }()
     
@@ -74,6 +73,13 @@ class CharacterViewController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.filterCharacters(showFavoritesOnly: selectedFavoritesSegment())
+        characterCollectionView.reloadData()
     }
 }
 
@@ -102,10 +108,13 @@ private extension CharacterViewController {
         }
     }
     
+    func selectedFavoritesSegment() -> Bool {
+        segmentedControl.selectedSegmentIndex == 1
+    }
+    
     //MARK: - Objc
     @objc func segmentedControlValueChanged(sender: UISegmentedControl) {
-        let showsFavoritesOnly = sender.selectedSegmentIndex == 1
-        viewModel.filterCharacters(showFavoritesOnly: showsFavoritesOnly)
+        viewModel.filterCharacters(showFavoritesOnly: selectedFavoritesSegment())
         characterCollectionView.reloadData()
     }
 }
@@ -129,7 +138,6 @@ extension CharacterViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterCell.identifier, 
                                                             for: indexPath) as? CharacterCell else { return UICollectionViewCell() }
         
-        cell.backgroundColor = .backgroundGrayColor
         cell.viewModel = viewModel.cellViewModel(at: indexPath)
         
         return cell

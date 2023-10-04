@@ -110,6 +110,7 @@ private extension CharacterCell {
         
         self.layer.cornerRadius = UIConstant.cornerRadiusSize
         self.clipsToBounds = true
+        self.backgroundColor = .backgroundGrayColor
         
         contentView.addSubview(characterImageView)
         characterImageView.snp.makeConstraints { make in
