@@ -18,7 +18,7 @@ class CharacterViewController: UIViewController {
         static let minimumLineSpacing: CGFloat = 16.0
         static let segmentedControlBottomInset: CGFloat = 50.0
         static let segmentedControlSidesInset: CGFloat = 80.0
-        static let segments = ["All", "Favorit"]
+        static let segments = ["All", "Favorites"]
     }
     
     //MARK: - Private properties

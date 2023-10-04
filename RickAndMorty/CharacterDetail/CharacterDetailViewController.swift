@@ -24,9 +24,14 @@ class CharacterDetailViewController: UIViewController {
             spaciesLabel.text = viewModel?.species
             genderLabel.text = viewModel?.gender
             statusLabel.text = viewModel?.status
+            viewModel.fetchImage()
             
-            guard let imageData = viewModel?.imageData else { return }
-            mainImageView.image = UIImage(data: imageData)
+            viewModel.imageLoaded = { data in
+                guard let data = data else { return }
+                DispatchQueue.main.async {
+                    self.mainImageView.image = UIImage(data: data)
+                }
+            }
         }
     }
     

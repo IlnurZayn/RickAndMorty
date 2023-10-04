@@ -8,21 +8,19 @@
 import Foundation
 
 protocol CharacterCellViewModelProtocol: AnyObject {
-    var imageData: Data? { get }
     var name: String { get }
     var status: String { get }
     var species: String { get }
     var gender: String { get }
     var fullStatus: String { get }
+    var imageLoaded: ((Data?) -> Void)? { get set }
     
     init(character: Character)
+    
+    func fetchImage()
 }
 
 final class CharacterCellViewModel: CharacterCellViewModelProtocol {
-    
-    var imageData: Data? {
-        ImageManager.shared.fetchImageData(from: character.image)
-    }
     
     var name: String {
         character.name
@@ -44,9 +42,17 @@ final class CharacterCellViewModel: CharacterCellViewModelProtocol {
         "\(status) - \(species) - \(gender)"
     }
     
+    var imageLoaded: ((Data?) -> Void)?
+    
     private let character: Character
     
     required init(character: Character) {
         self.character = character
+    }
+    
+    func fetchImage() {
+        ImageManager.shared.fetchImageData(from: character.image) { data in
+            self.imageLoaded?(data)
+        }
     }
 }
