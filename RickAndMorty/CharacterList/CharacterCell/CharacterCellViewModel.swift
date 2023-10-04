@@ -18,7 +18,7 @@ protocol CharacterCellViewModelProtocol: AnyObject {
     init(character: Character)
 }
 
-class CharacterCellViewModel: CharacterCellViewModelProtocol {
+final class CharacterCellViewModel: CharacterCellViewModelProtocol {
     
     var imageData: Data? {
         ImageManager.shared.fetchImageData(from: character.image)

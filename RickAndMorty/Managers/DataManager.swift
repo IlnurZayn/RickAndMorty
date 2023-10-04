@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DataManager {
+final class DataManager {
     
     static let shared = DataManager()
     
@@ -15,11 +15,19 @@ class DataManager {
     
     init() { }
     
-    func setFavoriteStatus(for characterName: String, with status: Bool) {
-        userDefaults.setValue(status, forKey: characterName)
+    func setFavoriteStatus(for character: String, with status: Bool) {
+        userDefaults.setValue(status, forKey: character)
     }
     
-    func getFavoriteStatus(for characterName: String) -> Bool {
-        userDefaults.bool(forKey: characterName)
+    func getFavoriteStatus(for character: String) -> Bool {
+        userDefaults.bool(forKey: character)
+    }
+    
+    func removeValue(for character: String) {
+        userDefaults.removeObject(forKey: character)
+    }
+    
+    func getAllKeys() -> [String] {
+        Array(DataManager.shared.userDefaults.dictionaryRepresentation().keys)
     }
 }

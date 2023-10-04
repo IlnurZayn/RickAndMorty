@@ -65,6 +65,7 @@ class CharacterViewController: UIViewController {
         segmentedControl.selectedSegmentTintColor = .acidColor
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.tintColor = .red
+        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(sender:)), for: .valueChanged)
         return segmentedControl
     }()
     
@@ -99,6 +100,13 @@ private extension CharacterViewController {
             make.bottom.equalToSuperview().inset(UIConstant.segmentedControlBottomInset)
             make.leading.trailing.equalToSuperview().inset(UIConstant.segmentedControlSidesInset)
         }
+    }
+    
+    //MARK: - Objc
+    @objc func segmentedControlValueChanged(sender: UISegmentedControl) {
+        let showsFavoritesOnly = sender.selectedSegmentIndex == 1
+        viewModel.filterCharacters(showFavoritesOnly: showsFavoritesOnly)
+        characterCollectionView.reloadData()
     }
 }
 

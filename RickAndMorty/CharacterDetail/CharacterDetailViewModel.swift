@@ -19,9 +19,10 @@ protocol CharacterDetailViewModelProtocol: AnyObject {
     init(character: Character)
     
     func favoriteButtonPressed()
+    func deleteCharacter(forFalse false: Bool)
 }
 
-class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
+final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
     
     var name: String {
         character.name
@@ -45,10 +46,10 @@ class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
     
     var isFavorite: Bool {
         get {
-            DataManager.shared.getFavoriteStatus(for: character.name)
+            DataManager.shared.getFavoriteStatus(for: character.image)
         }
         set {
-            DataManager.shared.setFavoriteStatus(for: character.name, with: newValue)
+            DataManager.shared.setFavoriteStatus(for: character.image, with: newValue)
             viewModelDidChange?(self)
         }
     }
@@ -63,5 +64,11 @@ class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
     
     func favoriteButtonPressed() {
         isFavorite.toggle()
+    }
+    
+    func deleteCharacter(forFalse: Bool) {
+        if forFalse == false {
+            DataManager.shared.removeValue(for: character.image)
+        }
     }
 }

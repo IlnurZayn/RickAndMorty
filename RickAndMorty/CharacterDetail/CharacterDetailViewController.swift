@@ -15,6 +15,7 @@ class CharacterDetailViewController: UIViewController {
         didSet {
             viewModel.viewModelDidChange = { [unowned self] viewModel in
                 setStatusForFavoriteButton()
+                viewModel.deleteCharacter(forFalse: viewModel.isFavorite)
             }
             
             setStatusForFavoriteButton()
@@ -138,10 +139,7 @@ class CharacterDetailViewController: UIViewController {
     }()
     
     private let favoriteBarButtonItem: UIBarButtonItem = {
-        let favoriteBarButtonItem = UIBarButtonItem()//image: UIImage(systemName: DefaultText.favoritesButton.rawValue),
-                                                    //style: .done,
-                                                    //target: self,
-                                                    //action: #selector(toggleFavorite(sender:)))
+        let favoriteBarButtonItem = UIBarButtonItem()
         favoriteBarButtonItem.image = UIImage(systemName: DefaultText.favoritesButton.rawValue)
         favoriteBarButtonItem.action = #selector(toggleFavorite)
         favoriteBarButtonItem.tintColor = .indicatorGray
