@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - Protocol
 protocol CharacterCellViewModelProtocol: AnyObject {
     var name: String { get }
     var status: String { get }
@@ -19,6 +20,7 @@ protocol CharacterCellViewModelProtocol: AnyObject {
     func fetchImage(completion: @escaping (Data?) -> Void)
 }
 
+//MARK: - Class
 final class CharacterCellViewModel: CharacterCellViewModelProtocol {
     
     var name: String {

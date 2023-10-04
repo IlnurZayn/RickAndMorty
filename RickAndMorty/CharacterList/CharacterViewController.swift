@@ -19,6 +19,7 @@ class CharacterViewController: UIViewController {
         static let segmentedControlBottomInset: CGFloat = 50.0
         static let segmentedControlSidesInset: CGFloat = 80.0
         static let segmentsTitles = ["All", "Favorites"]
+        static let searchBarPlaceholderText = ["Rick Sanchez", "Morty Smith"]
     }
     
     //MARK: - Private properties
@@ -47,16 +48,16 @@ class CharacterViewController: UIViewController {
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        let characters = ["Rick Sanchez", "Morty Smith"]
-        let placeholer = characters.randomElement()
+        searchBar.delegate = self
+        let placeholder = UIConstant.searchBarPlaceholderText.randomElement()
         searchBar.searchBarStyle = .minimal
-        searchBar.tintColor = .acidColor
-        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: placeholer ?? "",
+        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder ?? "",
                                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.indicatorGrayColor as Any])
+        searchBar.tintColor = .acidColor
         searchBar.searchTextField.leftView?.tintColor = .acidColor
+        searchBar.searchTextField.textColor = .acidColor
         searchBar.searchTextField.clearButtonMode = .whileEditing
         searchBar.showsCancelButton = true
-        searchBar.searchTextField.textColor = .acidColor
         
         return searchBar
     }()
@@ -95,7 +96,7 @@ private extension CharacterViewController {
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.isHidden = false
         navigationItem.titleView = searchBar
-        searchBar.delegate = self
+        
         viewModel = CharacterListViewModel()
 
         view.addSubview(characterCollectionView)

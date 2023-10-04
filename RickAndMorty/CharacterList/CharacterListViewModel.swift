@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - Protocol
 protocol CharacterListViewModelProtocol: AnyObject {
     var characters: [Character] { get }
     var favoritesCharacters: [Character] { get }
@@ -20,6 +21,7 @@ protocol CharacterListViewModelProtocol: AnyObject {
     func viewModelForSelectedItem(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol
 }
 
+//MARK: - Class
 final class CharacterListViewModel: CharacterListViewModelProtocol {
     
     var characters: [Character] = []
@@ -29,7 +31,8 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
     var pages: Int?
     
     func fetchPages(completion: @escaping () -> Void) {
-        NetworkService.shared.fetchData(with: fullUrl, dataType: CharacterModel.self) { result in
+        NetworkService.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue, 
+                                        dataType: CharacterModel.self) { result in
             self.pages = result.info.pages
             completion()
         }
@@ -45,7 +48,8 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
             
             dispatchGroup.enter()
             
-            NetworkService.shared.fetchData(with: pageUrl + "\(page)", dataType: CharacterModel.self) { result in
+            NetworkService.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue + Endpoint.page.rawValue + "\(page)",
+                                            dataType: CharacterModel.self) { result in
                 self.characters.append(contentsOf: result.results)
                 self.favoritesCharacters = self.characters
                 dispatchGroup.leave()
