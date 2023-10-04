@@ -18,7 +18,7 @@ class CharacterViewController: UIViewController {
         static let minimumLineSpacing: CGFloat = 16.0
         static let segmentedControlBottomInset: CGFloat = 50.0
         static let segmentedControlSidesInset: CGFloat = 80.0
-        static let segments = ["All", "Favorites"]
+        static let segmentsTitles = ["All", "Favorites"]
     }
     
     //MARK: - Private properties
@@ -32,11 +32,12 @@ class CharacterViewController: UIViewController {
         }
     }
     
-    private var characterCollectionView: UICollectionView = {
+    private lazy var characterCollectionView: UICollectionView = {
         let loyaut = UICollectionViewFlowLayout()
         loyaut.scrollDirection = .vertical
         
         let characterCollectionView = UICollectionView(frame: .zero, collectionViewLayout: loyaut)
+        characterCollectionView.subscribe(self)
         characterCollectionView.register(CharacterCell.self, forCellWithReuseIdentifier: CharacterCell.identifier)
         characterCollectionView.backgroundColor = .backgroundDarkGrayColor
         characterCollectionView.showsVerticalScrollIndicator = false
@@ -44,7 +45,7 @@ class CharacterViewController: UIViewController {
         return characterCollectionView
     }()
     
-    private let searchBar: UISearchBar = {
+    private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         let characters = ["Rick Sanchez", "Morty Smith"]
         let placeholer = characters.randomElement()
@@ -56,11 +57,12 @@ class CharacterViewController: UIViewController {
         searchBar.searchTextField.clearButtonMode = .whileEditing
         searchBar.showsCancelButton = true
         searchBar.searchTextField.textColor = .acidColor
+        
         return searchBar
     }()
     
-    private let segmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: UIConstant.segments)
+    private lazy var segmentedControl: UISegmentedControl = {
+        let segmentedControl = UISegmentedControl(items: UIConstant.segmentsTitles)
         segmentedControl.backgroundColor = .backgroundGrayColor
         segmentedControl.selectedSegmentTintColor = .acidColor
         segmentedControl.selectedSegmentIndex = 0
@@ -96,8 +98,6 @@ private extension CharacterViewController {
         searchBar.delegate = self
         viewModel = CharacterListViewModel()
 
-        characterCollectionView.dataSource = self
-        characterCollectionView.delegate = self
         view.addSubview(characterCollectionView)
         characterCollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

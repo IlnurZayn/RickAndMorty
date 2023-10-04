@@ -27,6 +27,7 @@
 		46D234B82ACA169400F2FC0D /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234B72ACA169400F2FC0D /* ImageManager.swift */; };
 		46D234C12ACC7A6100F2FC0D /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234C02ACC7A6100F2FC0D /* DataManager.swift */; };
 		46D234C62ACD8DA500F2FC0D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 46D234C52ACD8DA500F2FC0D /* Kingfisher */; };
+		46D234C82ACDA82E00F2FC0D /* Extension + UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234C72ACDA82E00F2FC0D /* Extension + UICollectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		46D234B52ACA093500F2FC0D /* CharacterDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailViewModel.swift; sourceTree = "<group>"; };
 		46D234B72ACA169400F2FC0D /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		46D234C02ACC7A6100F2FC0D /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		46D234C72ACDA82E00F2FC0D /* Extension + UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UICollectionView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				46D234A52AC8C94800F2FC0D /* Extension + UIColor.swift */,
+				46D234C72ACDA82E00F2FC0D /* Extension + UICollectionView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				46D234B82ACA169400F2FC0D /* ImageManager.swift in Sources */,
 				46D234A82AC98E5300F2FC0D /* CharacterModel.swift in Sources */,
 				46D234B62ACA093500F2FC0D /* CharacterDetailViewModel.swift in Sources */,
+				46D234C82ACDA82E00F2FC0D /* Extension + UICollectionView.swift in Sources */,
 				46D2349D2AC7704B00F2FC0D /* URLs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

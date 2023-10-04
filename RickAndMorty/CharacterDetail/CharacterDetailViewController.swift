@@ -55,7 +55,7 @@ class CharacterDetailViewController: UIViewController {
     }
     
     //MARK: - Private properties
-    private let mainImageView: UIImageView = {
+    private lazy var mainImageView: UIImageView = {
         let mainImageView = UIImageView()
         mainImageView.isUserInteractionEnabled = false
         mainImageView.clipsToBounds = true
@@ -65,7 +65,7 @@ class CharacterDetailViewController: UIViewController {
         return mainImageView
     }()
     
-    private let nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = .systemFont(ofSize: UIConstants.nameLabelFontSize, weight: .bold)
         nameLabel.isUserInteractionEnabled = false
@@ -78,7 +78,7 @@ class CharacterDetailViewController: UIViewController {
         return nameLabel
     }()
     
-    private let characteristicsView: UIView = {
+    private lazy var characteristicsView: UIView = {
         let characteristicsView = UIView()
         characteristicsView.backgroundColor = .backgroundGray
         characteristicsView.clipsToBounds = true
@@ -86,7 +86,7 @@ class CharacterDetailViewController: UIViewController {
         return characteristicsView
     }()
     
-    private let spaciesTextLabel: UILabel = {
+    private lazy var spaciesTextLabel: UILabel = {
         let spaciesTextLabel = UILabel()
         spaciesTextLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
         spaciesTextLabel.isUserInteractionEnabled = false
@@ -95,7 +95,7 @@ class CharacterDetailViewController: UIViewController {
         return spaciesTextLabel
     }()
     
-    private let spaciesLabel: UILabel = {
+    private lazy var spaciesLabel: UILabel = {
         let spaciesLabel = UILabel()
         spaciesLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
         spaciesLabel.isUserInteractionEnabled = false
@@ -104,7 +104,7 @@ class CharacterDetailViewController: UIViewController {
         return spaciesLabel
     }()
     
-    private let genderTextLabel: UILabel = {
+    private lazy var genderTextLabel: UILabel = {
         let genderTextLabel = UILabel()
         genderTextLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
         genderTextLabel.isUserInteractionEnabled = false
@@ -113,7 +113,7 @@ class CharacterDetailViewController: UIViewController {
         return genderTextLabel
     }()
     
-    private let genderLabel: UILabel = {
+    private lazy var genderLabel: UILabel = {
         let genderLabel = UILabel()
         genderLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
         genderLabel.isUserInteractionEnabled = false
@@ -122,7 +122,7 @@ class CharacterDetailViewController: UIViewController {
         return genderLabel
     }()
     
-    private let statusTextLabel: UILabel = {
+    private lazy var statusTextLabel: UILabel = {
         let statusTextLabel = UILabel()
         statusTextLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
         statusTextLabel.isUserInteractionEnabled = false
@@ -131,7 +131,7 @@ class CharacterDetailViewController: UIViewController {
         return statusTextLabel
     }()
     
-    private let statusLabel: UILabel = {
+    private lazy var statusLabel: UILabel = {
         let statusLabel = UILabel()
         statusLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
         statusLabel.isUserInteractionEnabled = false
@@ -140,7 +140,7 @@ class CharacterDetailViewController: UIViewController {
         return statusLabel
     }()
     
-    private let favoriteBarButtonItem: UIBarButtonItem = {
+    private lazy var favoriteBarButtonItem: UIBarButtonItem = {
         let favoriteBarButtonItem = UIBarButtonItem()
         favoriteBarButtonItem.image = UIImage(systemName: DefaultText.favoritesButton.rawValue)
         favoriteBarButtonItem.action = #selector(toggleFavorite)

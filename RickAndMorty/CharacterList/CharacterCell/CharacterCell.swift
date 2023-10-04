@@ -50,7 +50,7 @@ class CharacterCell: UICollectionViewCell {
     }
     
     //MARK: - Private properties
-    private let characterImageView: UIImageView = {
+    private lazy var characterImageView: UIImageView = {
         let characterImageView = UIImageView()
         characterImageView.backgroundColor = .backgroundDarkGrayColor
         characterImageView.isUserInteractionEnabled = false
@@ -60,7 +60,7 @@ class CharacterCell: UICollectionViewCell {
         return characterImageView
     }()
     
-    private let statusView: UIView = {
+    private lazy var statusView: UIView = {
         let statusView = UIView()
         statusView.isUserInteractionEnabled = false
         statusView.clipsToBounds = true
@@ -70,7 +70,7 @@ class CharacterCell: UICollectionViewCell {
         return statusView
     }()
     
-    private let characterNameLabel: UILabel = {
+    private lazy var characterNameLabel: UILabel = {
         let characterNameLabel = UILabel()
         characterNameLabel.isUserInteractionEnabled = false
         characterNameLabel.textColor = .textColor
@@ -79,7 +79,7 @@ class CharacterCell: UICollectionViewCell {
         return characterNameLabel
     }()
     
-    private let statusLabel: UILabel = {
+    private lazy var statusLabel: UILabel = {
         let statusLabel = UILabel()
         statusLabel.isUserInteractionEnabled = false
         statusLabel.textColor = .textColor
