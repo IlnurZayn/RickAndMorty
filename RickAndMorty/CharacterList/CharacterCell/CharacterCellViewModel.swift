@@ -13,11 +13,10 @@ protocol CharacterCellViewModelProtocol: AnyObject {
     var species: String { get }
     var gender: String { get }
     var fullStatus: String { get }
-    var imageLoaded: ((Data?) -> Void)? { get set }
     
     init(character: Character)
     
-    func fetchImage()
+    func fetchImage(completion: @escaping (Data?) -> Void)
 }
 
 final class CharacterCellViewModel: CharacterCellViewModelProtocol {
@@ -42,17 +41,15 @@ final class CharacterCellViewModel: CharacterCellViewModelProtocol {
         "\(status) - \(species) - \(gender)"
     }
     
-    var imageLoaded: ((Data?) -> Void)?
-    
     private let character: Character
     
     required init(character: Character) {
         self.character = character
     }
     
-    func fetchImage() {
+    func fetchImage(completion: @escaping (Data?) -> Void) {
         ImageManager.shared.fetchImageData(from: character.image) { data in
-            self.imageLoaded?(data)
+            completion(data)
         }
     }
 }

@@ -65,6 +65,8 @@ class CharacterViewController: UIViewController {
         segmentedControl.selectedSegmentTintColor = .acidColor
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+        segmentedControl.layer.borderColor = UIColor.backgroundDarkGrayColor?.cgColor
+        segmentedControl.layer.borderWidth = 1.0
         return segmentedControl
     }()
     

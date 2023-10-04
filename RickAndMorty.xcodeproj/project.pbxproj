@@ -14,7 +14,7 @@
 		46D2348A2AC76CF900F2FC0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46D234882AC76CF900F2FC0D /* LaunchScreen.storyboard */; };
 		46D234942AC76F6800F2FC0D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 46D234932AC76F6800F2FC0D /* SnapKit */; };
 		46D234962AC76F6800F2FC0D /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 46D234952AC76F6800F2FC0D /* SnapKit-Dynamic */; };
-		46D2349D2AC7704B00F2FC0D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D2349C2AC7704B00F2FC0D /* Constants.swift */; };
+		46D2349D2AC7704B00F2FC0D /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D2349C2AC7704B00F2FC0D /* URLs.swift */; };
 		46D234A12AC8350B00F2FC0D /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234A02AC8350B00F2FC0D /* CharacterCell.swift */; };
 		46D234A32AC8ACFB00F2FC0D /* CharacterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234A22AC8ACFB00F2FC0D /* CharacterDetailViewController.swift */; };
 		46D234A62AC8C94800F2FC0D /* Extension + UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234A52AC8C94800F2FC0D /* Extension + UIColor.swift */; };
@@ -26,6 +26,7 @@
 		46D234B62ACA093500F2FC0D /* CharacterDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234B52ACA093500F2FC0D /* CharacterDetailViewModel.swift */; };
 		46D234B82ACA169400F2FC0D /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234B72ACA169400F2FC0D /* ImageManager.swift */; };
 		46D234C12ACC7A6100F2FC0D /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234C02ACC7A6100F2FC0D /* DataManager.swift */; };
+		46D234C62ACD8DA500F2FC0D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 46D234C52ACD8DA500F2FC0D /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +37,7 @@
 		46D234862AC76CF900F2FC0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		46D234892AC76CF900F2FC0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		46D2348B2AC76CF900F2FC0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		46D2349C2AC7704B00F2FC0D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		46D2349C2AC7704B00F2FC0D /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		46D234A02AC8350B00F2FC0D /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
 		46D234A22AC8ACFB00F2FC0D /* CharacterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailViewController.swift; sourceTree = "<group>"; };
 		46D234A52AC8C94800F2FC0D /* Extension + UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIColor.swift"; sourceTree = "<group>"; };
@@ -54,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46D234C62ACD8DA500F2FC0D /* Kingfisher in Frameworks */,
 				46D234AB2AC9967200F2FC0D /* Alamofire in Frameworks */,
 				46D234942AC76F6800F2FC0D /* SnapKit in Frameworks */,
 				46D234962AC76F6800F2FC0D /* SnapKit-Dynamic in Frameworks */,
@@ -108,7 +110,7 @@
 		46D234972AC76FEA00F2FC0D /* API */ = {
 			isa = PBXGroup;
 			children = (
-				46D2349C2AC7704B00F2FC0D /* Constants.swift */,
+				46D2349C2AC7704B00F2FC0D /* URLs.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -187,6 +189,7 @@
 				46D234932AC76F6800F2FC0D /* SnapKit */,
 				46D234952AC76F6800F2FC0D /* SnapKit-Dynamic */,
 				46D234AA2AC9967200F2FC0D /* Alamofire */,
+				46D234C52ACD8DA500F2FC0D /* Kingfisher */,
 			);
 			productName = RickAndMorty;
 			productReference = 46D2347A2AC76CF800F2FC0D /* RickAndMorty.app */;
@@ -219,6 +222,7 @@
 			packageReferences = (
 				46D234922AC76F6800F2FC0D /* XCRemoteSwiftPackageReference "SnapKit" */,
 				46D234A92AC9967200F2FC0D /* XCRemoteSwiftPackageReference "Alamofire" */,
+				46D234C42ACD8DA500F2FC0D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 46D2347B2AC76CF800F2FC0D /* Products */;
 			projectDirPath = "";
@@ -259,7 +263,7 @@
 				46D234B82ACA169400F2FC0D /* ImageManager.swift in Sources */,
 				46D234A82AC98E5300F2FC0D /* CharacterModel.swift in Sources */,
 				46D234B62ACA093500F2FC0D /* CharacterDetailViewModel.swift in Sources */,
-				46D2349D2AC7704B00F2FC0D /* Constants.swift in Sources */,
+				46D2349D2AC7704B00F2FC0D /* URLs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +494,14 @@
 				minimumVersion = 5.8.0;
 			};
 		};
+		46D234C42ACD8DA500F2FC0D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.9.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -507,6 +519,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 46D234A92AC9967200F2FC0D /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		46D234C52ACD8DA500F2FC0D /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46D234C42ACD8DA500F2FC0D /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

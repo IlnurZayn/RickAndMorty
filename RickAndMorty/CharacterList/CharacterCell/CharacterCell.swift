@@ -17,14 +17,10 @@ class CharacterCell: UICollectionViewCell {
             characterNameLabel.text = viewModel.name
             statusLabel.text = viewModel.fullStatus
             setStatusViewBackgroundColor(status: viewModel.status)
-            viewModel.fetchImage()
             
-            viewModel.imageLoaded = { data in
+            viewModel.fetchImage { data in
                 guard let data = data else { return }
-                
-                DispatchQueue.main.async {
-                    self.characterImageView.image = UIImage(data: data)
-                }
+                self.characterImageView.image = UIImage(data: data)
             }
         }
     }

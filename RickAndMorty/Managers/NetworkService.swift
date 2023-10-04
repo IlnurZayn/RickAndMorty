@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 final class NetworkService {
     
@@ -13,23 +14,17 @@ final class NetworkService {
     
     private init() {}
     
-    func fetchData<T: Decodable>(with urlString: String, dataType: T.Type, completion: @escaping (T) -> Void) {
+    func fetchData<T: Decodable>(with stringUrl: String, dataType: T.Type, completion: @escaping (T) -> Void) {
         
-        guard let url = URL(string: urlString) else{ return }
+        guard let url = URL(string: stringUrl) else { return }
         
-        let session = URLSession.shared
-        
-        session.dataTask(with: url) { data, response, error in
-            guard let data = data else { return }
-            
-            do {
-                let dataArray = try JSONDecoder().decode(dataType, from: data)
-                DispatchQueue.main.async {
-                    completion(dataArray)
-                }
-            } catch {
+        AF.request(url).validate().responseDecodable(of: dataType) { responseData in
+            switch responseData.result {
+            case .success(let data):
+                completion(data)
+            case .failure(let error):
                 print(error.localizedDescription)
             }
-        }.resume()
+        }
     }
 }

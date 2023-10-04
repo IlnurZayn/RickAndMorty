@@ -14,13 +14,12 @@ protocol CharacterDetailViewModelProtocol: AnyObject {
     var status: String { get }
     var isFavorite: Bool { get }
     var viewModelDidChange: ((CharacterDetailViewModelProtocol) -> Void)? { get }
-    var imageLoaded: ((Data?) -> Void)? { get }
     
     init(character: Character)
     
     func favoriteButtonPressed()
     func deleteCharacter(forFalse false: Bool)
-    func fetchImage()
+    func fetchImage(comletion: @escaping (Data?) -> Void)
 }
 
 final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
@@ -53,8 +52,6 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
     
     var viewModelDidChange: ((CharacterDetailViewModelProtocol) -> Void)?
     
-    var imageLoaded: ((Data?) -> Void)?
-    
     private let character: Character
     
     required init(character: Character) {
@@ -71,10 +68,9 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
         }
     }
     
-    func fetchImage() {
-        ImageManager.shared.fetchImageData(from: character.image) { [weak self] data in
-            guard let self = self else { return }
-            self.imageLoaded?(data)
+    func fetchImage(comletion: @escaping (Data?) -> Void) {
+        ImageManager.shared.fetchImageData(from: character.image) { data in
+            comletion(data)
         }
     }
 }
