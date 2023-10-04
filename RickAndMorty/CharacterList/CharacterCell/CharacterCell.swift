@@ -12,6 +12,7 @@ class CharacterCell: UICollectionViewCell {
     
     //MARK: - Properties
     static let identifier = "CharacterCell"
+    
     var viewModel: CharacterCellViewModelProtocol! {
         didSet {
             characterNameLabel.text = viewModel.name

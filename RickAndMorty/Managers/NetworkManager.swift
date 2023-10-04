@@ -8,9 +8,9 @@
 import Foundation
 import Alamofire
 
-final class NetworkService {
+final class NetworkManager {
     
-    static let shared = NetworkService()
+    static let shared = NetworkManager()
     
     private init() {}
     

@@ -31,7 +31,7 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
     var pages: Int?
     
     func fetchPages(completion: @escaping () -> Void) {
-        NetworkService.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue, 
+        NetworkManager.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue, 
                                         dataType: CharacterModel.self) { result in
             self.pages = result.info.pages
             completion()
@@ -48,7 +48,7 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
             
             dispatchGroup.enter()
             
-            NetworkService.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue + Endpoint.page.rawValue + "\(page)",
+            NetworkManager.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue + Endpoint.page.rawValue + "\(page)",
                                             dataType: CharacterModel.self) { result in
                 self.characters.append(contentsOf: result.results)
                 self.favoritesCharacters = self.characters
