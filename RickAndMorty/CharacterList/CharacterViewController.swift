@@ -83,7 +83,8 @@ class CharacterViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel.filterCharacters(showFavoritesOnly: selectedFavoritesSegment())
+        //viewModel.search(by: searchBar.text ?? "")
+        //viewModel.filterCharacters(showFavoritesOnly: selectedFavoritesSegment())
         characterCollectionView.reloadData()
     }
 }
@@ -117,7 +118,7 @@ private extension CharacterViewController {
     
     //MARK: - Objc
     @objc func segmentedControlValueChanged(sender: UISegmentedControl) {
-        viewModel.filterCharacters(showFavoritesOnly: selectedFavoritesSegment())
+        viewModel.filterCharacters(showFavoritesOnly: selectedFavoritesSegment(), text: searchBar.text ?? "")
         characterCollectionView.reloadData()
     }
 }
@@ -174,5 +175,10 @@ extension CharacterViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.search(by: searchText)
+        characterCollectionView.reloadData()
     }
 }

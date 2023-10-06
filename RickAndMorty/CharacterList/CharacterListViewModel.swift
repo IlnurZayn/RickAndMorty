@@ -11,12 +11,15 @@ import Foundation
 protocol CharacterListViewModelProtocol: AnyObject {
     var characters: [Character] { get }
     var favoritesCharacters: [Character] { get }
+    var displayedCharacters: [Character] { get }
     var pages: Int? { get }
+    var isFavorites: Bool { get }
 
     func fetchPages(completion: @escaping () -> Void)
     func fetchCharacters(completion: @escaping () -> Void)
+    func filterCharacters(showFavoritesOnly: Bool, text: String)
+    func search(by text: String)
     func numberOfItems() -> Int
-    func filterCharacters(showFavoritesOnly: Bool)
     func cellViewModel(at indexPath: IndexPath) -> CharacterCellViewModelProtocol
     func viewModelForSelectedItem(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol
 }
@@ -24,11 +27,16 @@ protocol CharacterListViewModelProtocol: AnyObject {
 //MARK: - Class
 final class CharacterListViewModel: CharacterListViewModelProtocol {
     
+    
     var characters: [Character] = []
     
     var favoritesCharacters: [Character] = []
     
+    var displayedCharacters: [Character] = []
+    
     var pages: Int?
+    
+    var isFavorites: Bool = false
     
     func fetchPages(completion: @escaping () -> Void) {
         NetworkManager.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue, 
@@ -51,7 +59,7 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
             NetworkManager.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue + Endpoint.page.rawValue + "\(page)",
                                             dataType: CharacterModel.self) { result in
                 self.characters.append(contentsOf: result.results)
-                self.favoritesCharacters = self.characters
+                self.displayedCharacters = self.characters
                 dispatchGroup.leave()
             }
         }
@@ -62,24 +70,50 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
     }
     
     func numberOfItems() -> Int {
-        favoritesCharacters.count
+        displayedCharacters.count
     }
     
-    func filterCharacters(showFavoritesOnly: Bool) {
-        if showFavoritesOnly {
-            favoritesCharacters = characters.filter { DataManager.shared.getAllKeys().contains($0.image) }
+    func filterCharacters(showFavoritesOnly: Bool, text: String) {
+        if text != "" {
+            if showFavoritesOnly {
+                isFavorites = true
+                search(by: text)
+            } else {
+                isFavorites = false
+                search(by: text)
+            }
         } else {
-            favoritesCharacters = characters
+            if showFavoritesOnly {
+                favoritesCharacters = characters.filter { DataManager.shared.getAllKeys().contains($0.image) }
+                displayedCharacters = favoritesCharacters
+                isFavorites = true
+            } else {
+                displayedCharacters = characters
+                isFavorites = false
+            }
+        }
+        
+        
+    }
+    
+    func search(by text: String) {
+        let filteredAllCharacters = characters.filter { $0.name.lowercased().contains(text.lowercased()) }
+        let filteredFavoritesCharacters = favoritesCharacters.filter { $0.name.lowercased().contains(text.lowercased()) }
+        
+        if text != "" {
+            displayedCharacters = isFavorites ? filteredFavoritesCharacters : filteredAllCharacters
+        } else {
+            displayedCharacters = isFavorites ? favoritesCharacters : characters
         }
     }
     
     func cellViewModel(at indexPath: IndexPath) -> CharacterCellViewModelProtocol {
-        let character = favoritesCharacters[indexPath.item]
+        let character = displayedCharacters[indexPath.item]
         return CharacterCellViewModel(character: character)
     }
     
     func viewModelForSelectedItem(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol {
-        let character = favoritesCharacters[indexPath.item]
+        let character = displayedCharacters[indexPath.item]
         return CharacterDetailViewModel(character: character)
     }
 }
