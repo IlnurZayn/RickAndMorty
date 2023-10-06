@@ -83,8 +83,7 @@ class CharacterViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //viewModel.search(by: searchBar.text ?? "")
-        //viewModel.filterCharacters(showFavoritesOnly: selectedFavoritesSegment())
+        viewModel.filterCharacters(showFavoritesOnly: selectedFavoritesSegment(), text: searchBar.text ?? "")
         characterCollectionView.reloadData()
     }
 }

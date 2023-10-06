@@ -77,6 +77,8 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
         if text != "" {
             if showFavoritesOnly {
                 isFavorites = true
+                favoritesCharacters = characters.filter { DataManager.shared.getAllKeys().contains($0.image) }
+                displayedCharacters = favoritesCharacters
                 search(by: text)
             } else {
                 isFavorites = false
