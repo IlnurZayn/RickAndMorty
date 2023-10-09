@@ -33,16 +33,15 @@ class CharacterViewController: UIViewController {
         }
     }
     
-    private lazy var characterCollectionView: UICollectionView = {
+    private lazy var characterCollectionView: UICollectionView = { // убрать все lazy var
         let loyaut = UICollectionViewFlowLayout()
         loyaut.scrollDirection = .vertical
         
         let characterCollectionView = UICollectionView(frame: .zero, collectionViewLayout: loyaut)
-        characterCollectionView.subscribe(self)
+        characterCollectionView.subscribe(self)  // вныести
         characterCollectionView.register(CharacterCell.self, forCellWithReuseIdentifier: CharacterCell.identifier)
         characterCollectionView.backgroundColor = .backgroundDarkGrayColor
         characterCollectionView.showsVerticalScrollIndicator = false
-        characterCollectionView.showsHorizontalScrollIndicator = false
         return characterCollectionView
     }()
     
@@ -67,7 +66,7 @@ class CharacterViewController: UIViewController {
         segmentedControl.backgroundColor = .backgroundGrayColor
         segmentedControl.selectedSegmentTintColor = .acidColor
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)  // вынести tagets
         segmentedControl.layer.borderColor = UIColor.backgroundDarkGrayColor?.cgColor
         segmentedControl.layer.borderWidth = 1.0
         return segmentedControl
@@ -111,7 +110,7 @@ private extension CharacterViewController {
         }
     }
     
-    func selectedFavoritesSegment() -> Bool {
+    func selectedFavoritesSegment() -> Bool {  //remove
         segmentedControl.selectedSegmentIndex == 1
     }
     

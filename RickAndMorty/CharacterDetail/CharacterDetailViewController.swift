@@ -57,7 +57,6 @@ class CharacterDetailViewController: UIViewController {
     //MARK: - Private properties
     private lazy var mainImageView: UIImageView = {
         let mainImageView = UIImageView()
-        mainImageView.isUserInteractionEnabled = false
         mainImageView.clipsToBounds = true
         mainImageView.layer.cornerRadius = UIConstants.cornerRadiusForView
         mainImageView.contentMode = .scaleAspectFill
@@ -68,7 +67,6 @@ class CharacterDetailViewController: UIViewController {
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = .systemFont(ofSize: UIConstants.nameLabelFontSize, weight: .bold)
-        nameLabel.isUserInteractionEnabled = false
         nameLabel.clipsToBounds = true
         nameLabel.textAlignment = .center
         nameLabel.layer.cornerRadius = UIConstants.cornerRadiusForView
@@ -89,7 +87,6 @@ class CharacterDetailViewController: UIViewController {
     private lazy var spaciesTextLabel: UILabel = {
         let spaciesTextLabel = UILabel()
         spaciesTextLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
-        spaciesTextLabel.isUserInteractionEnabled = false
         spaciesTextLabel.textColor = .textColor
         spaciesTextLabel.text = DefaultText.species.rawValue
         return spaciesTextLabel
@@ -98,7 +95,6 @@ class CharacterDetailViewController: UIViewController {
     private lazy var spaciesLabel: UILabel = {
         let spaciesLabel = UILabel()
         spaciesLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
-        spaciesLabel.isUserInteractionEnabled = false
         spaciesLabel.textColor = .textColor
         spaciesLabel.text = DefaultText.unknow.rawValue
         return spaciesLabel
@@ -107,7 +103,6 @@ class CharacterDetailViewController: UIViewController {
     private lazy var genderTextLabel: UILabel = {
         let genderTextLabel = UILabel()
         genderTextLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
-        genderTextLabel.isUserInteractionEnabled = false
         genderTextLabel.textColor = .textColor
         genderTextLabel.text = DefaultText.gender.rawValue
         return genderTextLabel
@@ -116,7 +111,6 @@ class CharacterDetailViewController: UIViewController {
     private lazy var genderLabel: UILabel = {
         let genderLabel = UILabel()
         genderLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
-        genderLabel.isUserInteractionEnabled = false
         genderLabel.textColor = .textColor
         genderLabel.text = DefaultText.unknow.rawValue
         return genderLabel
@@ -125,7 +119,6 @@ class CharacterDetailViewController: UIViewController {
     private lazy var statusTextLabel: UILabel = {
         let statusTextLabel = UILabel()
         statusTextLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
-        statusTextLabel.isUserInteractionEnabled = false
         statusTextLabel.textColor = .textColor
         statusTextLabel.text = DefaultText.status.rawValue
         return statusTextLabel
@@ -134,7 +127,6 @@ class CharacterDetailViewController: UIViewController {
     private lazy var statusLabel: UILabel = {
         let statusLabel = UILabel()
         statusLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
-        statusLabel.isUserInteractionEnabled = false
         statusLabel.textColor = .textColor
         statusLabel.text = DefaultText.unknow.rawValue
         return statusLabel
@@ -198,7 +190,7 @@ private extension CharacterDetailViewController {
             make.edges.equalToSuperview().inset(UIConstants.subViewToSuperViewInsetOffset)
         }
         
-        let speciesStackView = UIStackView()
+        let speciesStackView = UIStackView() // убрать повторения
         characteristicsStackView.addArrangedSubview(speciesStackView)
         speciesStackView.axis = .horizontal
         speciesStackView.distribution = .equalSpacing
@@ -218,6 +210,10 @@ private extension CharacterDetailViewController {
         statusStackView.distribution = .equalSpacing
         statusStackView.addArrangedSubview(statusTextLabel)
         statusStackView.addArrangedSubview(statusLabel)
+    }
+    
+    func createStack() -> UIStackView {
+        return UIStackView()
     }
     
     func setStatusForFavoriteButton() {

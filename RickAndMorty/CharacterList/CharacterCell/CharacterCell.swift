@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class CharacterCell: UICollectionViewCell {
     
@@ -18,8 +19,7 @@ class CharacterCell: UICollectionViewCell {
             characterNameLabel.text = viewModel.name
             statusLabel.text = viewModel.fullStatus
             setStatusViewBackgroundColor(status: viewModel.status)
-            
-            viewModel.fetchImage { data in
+            viewModel.fetchImage { data in  ///заменить на функцию кингфишера
                 guard let data = data else { return }
                 self.characterImageView.image = UIImage(data: data)
             }
@@ -54,7 +54,6 @@ class CharacterCell: UICollectionViewCell {
     private lazy var characterImageView: UIImageView = {
         let characterImageView = UIImageView()
         characterImageView.backgroundColor = .backgroundDarkGrayColor
-        characterImageView.isUserInteractionEnabled = false
         characterImageView.clipsToBounds = true
         characterImageView.contentMode = .scaleAspectFill
         characterImageView.image = UIImage(named: "Unknow")
@@ -63,7 +62,6 @@ class CharacterCell: UICollectionViewCell {
     
     private lazy var statusView: UIView = {
         let statusView = UIView()
-        statusView.isUserInteractionEnabled = false
         statusView.clipsToBounds = true
         statusView.contentMode = .scaleAspectFill
         statusView.backgroundColor = .indicatorGrayColor
@@ -72,8 +70,6 @@ class CharacterCell: UICollectionViewCell {
     }()
     
     private lazy var characterNameLabel: UILabel = {
-        let characterNameLabel = UILabel()
-        characterNameLabel.isUserInteractionEnabled = false
         characterNameLabel.textColor = .textColor
         characterNameLabel.text = "Unknow"
         characterNameLabel.font = .boldSystemFont(ofSize: UIConstant.nameLabelFontSize)
@@ -82,7 +78,6 @@ class CharacterCell: UICollectionViewCell {
     
     private lazy var statusLabel: UILabel = {
         let statusLabel = UILabel()
-        statusLabel.isUserInteractionEnabled = false
         statusLabel.textColor = .textColor
         statusLabel.text = "Unknow"
         statusLabel.font = .systemFont(ofSize: UIConstant.statusLabelFontSize)
@@ -98,6 +93,10 @@ class CharacterCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+//    override func prepareForReuse() {
+//
+//    }
 }
 
 //MARK: - Private Methods

@@ -21,7 +21,7 @@ protocol CharacterCellViewModelProtocol: AnyObject {
 }
 
 //MARK: - Class
-final class CharacterCellViewModel: CharacterCellViewModelProtocol {
+final class CharacterCellViewModel: CharacterCellViewModelProtocol {  // избавиться от VM
     
     var name: String {
         character.name

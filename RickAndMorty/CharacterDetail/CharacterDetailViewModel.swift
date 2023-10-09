@@ -65,7 +65,11 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
     }
     
     func deleteCharacter(forFalse: Bool) {
-        if forFalse == false {
+        
+        guard forFalse else { return }
+        DataManager.shared.removeValue(for: character.image)
+        
+        if !forFalse {
             DataManager.shared.removeValue(for: character.image)
         }
     }
