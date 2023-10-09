@@ -76,7 +76,9 @@ class CharacterCell: UICollectionViewCell {
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         configureUI()
+        addSubviews()
         makeConstraints()
     }
     
@@ -112,7 +114,9 @@ private extension CharacterCell {
         self.layer.cornerRadius = UIConstant.cornerRadiusSize
         self.clipsToBounds = true
         self.backgroundColor = .backgroundGrayColor
-        
+    }
+    
+    func addSubviews() {
         contentView.addSubview(characterImageView)
         contentView.addSubview(characterNameLabel)
         contentView.addSubview(statusView)

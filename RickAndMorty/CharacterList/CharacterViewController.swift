@@ -23,15 +23,7 @@ class CharacterViewController: UIViewController {
     }
     
     //MARK: - Private properties
-    private var viewModel: CharacterListViewModel! {
-        didSet {
-            viewModel.fetchPages {
-                self.viewModel.fetchCharacters {
-                    self.characterCollectionView.reloadData()
-                }
-            }
-        }
-    }
+    private var viewModel: CharacterListViewModel!
     
     private let characterCollectionView: UICollectionView = {
         let loyaut = UICollectionViewFlowLayout()
@@ -53,7 +45,7 @@ class CharacterViewController: UIViewController {
         searchBar.tintColor = .acidColor
         searchBar.searchTextField.leftView?.tintColor = .acidColor
         searchBar.searchTextField.textColor = .acidColor
-        searchBar.searchTextField.clearButtonMode = .whileEditing
+        searchBar.searchTextField.clearButtonMode = .never
         searchBar.showsCancelButton = true
         
         return searchBar
@@ -69,11 +61,22 @@ class CharacterViewController: UIViewController {
         return segmentedControl
     }()
     
+    //MARK: - Init
+    init(viewModel: CharacterListViewModel!) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
+        addSubviews()
         makeConstaints()
         addTargets()
     }
@@ -96,9 +99,14 @@ private extension CharacterViewController {
         navigationItem.titleView = searchBar
         characterCollectionView.subscribe(self)
         searchBar.delegate = self
-        
-        viewModel = CharacterListViewModel()
-
+        viewModel.fetchPages {
+            self.viewModel.fetchCharacters {
+                self.characterCollectionView.reloadData()
+            }
+        }
+    }
+    
+    func addSubviews() {
         view.addSubview(characterCollectionView)
         view.addSubview(segmentedControl)
     }
@@ -118,6 +126,7 @@ private extension CharacterViewController {
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
     }
     
+    //MARK: - Remove
     func selectedFavoritesSegment() -> Bool {  //remove
         segmentedControl.selectedSegmentIndex == 1
     }
@@ -141,7 +150,7 @@ extension CharacterViewController: UICollectionViewDelegate {
 //MARK: - UITableViewDataSource
 extension CharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.numberOfItems()
+        return viewModel.numberOfItems()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

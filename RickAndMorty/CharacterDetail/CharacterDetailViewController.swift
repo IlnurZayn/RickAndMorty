@@ -134,7 +134,6 @@ class CharacterDetailViewController: UIViewController {
     private let favoriteBarButtonItem: UIBarButtonItem = {
         let favoriteBarButtonItem = UIBarButtonItem()
         favoriteBarButtonItem.image = UIImage(systemName: DefaultText.favoritesButton.rawValue)
-        favoriteBarButtonItem.action = #selector(toggleFavorite)
         favoriteBarButtonItem.tintColor = .indicatorGray
         return favoriteBarButtonItem
     }()
@@ -144,6 +143,7 @@ class CharacterDetailViewController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
+        addTargets()
     }
 }
 
@@ -189,7 +189,9 @@ private extension CharacterDetailViewController {
             make.edges.equalToSuperview().inset(UIConstants.subViewToSuperViewInsetOffset)
         }
         
-        let speciesStackView = UIStackView() // убрать повторения
+        //MARK: - // убрать повторения
+        
+        let speciesStackView = UIStackView()
         characteristicsStackView.addArrangedSubview(speciesStackView)
         speciesStackView.axis = .horizontal
         speciesStackView.distribution = .equalSpacing
@@ -215,6 +217,11 @@ private extension CharacterDetailViewController {
         
     }
     
+    func addTargets() {
+        favoriteBarButtonItem.action = #selector(toggleFavorite)
+    }
+    
+    //MARK: - Сделать общий стэк вью
     func createStack() -> UIStackView { //!!!!!!!!!!!
         return UIStackView()
     }
