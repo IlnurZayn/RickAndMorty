@@ -33,21 +33,19 @@ class CharacterViewController: UIViewController {
         }
     }
     
-    private lazy var characterCollectionView: UICollectionView = { // убрать все lazy var
+    private let characterCollectionView: UICollectionView = {
         let loyaut = UICollectionViewFlowLayout()
         loyaut.scrollDirection = .vertical
         
         let characterCollectionView = UICollectionView(frame: .zero, collectionViewLayout: loyaut)
-        characterCollectionView.subscribe(self)  // вныести
         characterCollectionView.register(CharacterCell.self, forCellWithReuseIdentifier: CharacterCell.identifier)
         characterCollectionView.backgroundColor = .backgroundDarkGrayColor
         characterCollectionView.showsVerticalScrollIndicator = false
         return characterCollectionView
     }()
     
-    private lazy var searchBar: UISearchBar = {
+    private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.delegate = self
         let placeholder = UIConstant.searchBarPlaceholderText.randomElement()
         searchBar.searchBarStyle = .minimal
         searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: placeholder ?? "",
@@ -61,12 +59,11 @@ class CharacterViewController: UIViewController {
         return searchBar
     }()
     
-    private lazy var segmentedControl: UISegmentedControl = {
+    private let segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: UIConstant.segmentsTitles)
         segmentedControl.backgroundColor = .backgroundGrayColor
         segmentedControl.selectedSegmentTintColor = .acidColor
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)  // вынести tagets
         segmentedControl.layer.borderColor = UIColor.backgroundDarkGrayColor?.cgColor
         segmentedControl.layer.borderWidth = 1.0
         return segmentedControl
@@ -77,6 +74,7 @@ class CharacterViewController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
+        addTargets()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -95,6 +93,8 @@ private extension CharacterViewController {
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.isHidden = false
         navigationItem.titleView = searchBar
+        characterCollectionView.subscribe(self)
+        searchBar.delegate = self
         
         viewModel = CharacterListViewModel()
 
@@ -108,6 +108,10 @@ private extension CharacterViewController {
             make.bottom.equalToSuperview().inset(UIConstant.segmentedControlBottomInset)
             make.leading.trailing.equalToSuperview().inset(UIConstant.segmentedControlSidesInset)
         }
+    }
+    
+    func addTargets() {
+        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
     }
     
     func selectedFavoritesSegment() -> Bool {  //remove

@@ -19,9 +19,9 @@ class CharacterCell: UICollectionViewCell {
             characterNameLabel.text = viewModel.name
             statusLabel.text = viewModel.fullStatus
             setStatusViewBackgroundColor(status: viewModel.status)
-            viewModel.fetchImage { data in  ///заменить на функцию кингфишера
-                guard let data = data else { return }
-                self.characterImageView.image = UIImage(data: data)
+            
+            if let url = URL(string: viewModel.image) {
+                characterImageView.kf.setImage(with: url)
             }
         }
     }
@@ -51,7 +51,7 @@ class CharacterCell: UICollectionViewCell {
     }
     
     //MARK: - Private properties
-    private lazy var characterImageView: UIImageView = {
+    private let characterImageView: UIImageView = {
         let characterImageView = UIImageView()
         characterImageView.backgroundColor = .backgroundDarkGrayColor
         characterImageView.clipsToBounds = true
@@ -60,7 +60,7 @@ class CharacterCell: UICollectionViewCell {
         return characterImageView
     }()
     
-    private lazy var statusView: UIView = {
+    private let statusView: UIView = {
         let statusView = UIView()
         statusView.clipsToBounds = true
         statusView.contentMode = .scaleAspectFill
@@ -69,14 +69,15 @@ class CharacterCell: UICollectionViewCell {
         return statusView
     }()
     
-    private lazy var characterNameLabel: UILabel = {
+    private let characterNameLabel: UILabel = {
+        let characterNameLabel = UILabel()
         characterNameLabel.textColor = .textColor
         characterNameLabel.text = "Unknow"
         characterNameLabel.font = .boldSystemFont(ofSize: UIConstant.nameLabelFontSize)
         return characterNameLabel
     }()
     
-    private lazy var statusLabel: UILabel = {
+    private let statusLabel: UILabel = {
         let statusLabel = UILabel()
         statusLabel.textColor = .textColor
         statusLabel.text = "Unknow"

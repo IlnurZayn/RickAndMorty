@@ -9,6 +9,7 @@ import Foundation
 
 //MARK: - Protocol
 protocol CharacterDetailViewModelProtocol: AnyObject {
+    var image: String { get }
     var name: String { get }
     var species: String { get }
     var gender: String { get }
@@ -20,11 +21,14 @@ protocol CharacterDetailViewModelProtocol: AnyObject {
     
     func favoriteButtonPressed()
     func deleteCharacter(forFalse false: Bool)
-    func fetchImage(comletion: @escaping (Data?) -> Void)
 }
 
 //MARK: - Class
 final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
+    
+    var image: String {
+        character.image
+    }
     
     var name: String {
         character.name
@@ -71,12 +75,6 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
         
         if !forFalse {
             DataManager.shared.removeValue(for: character.image)
-        }
-    }
-    
-    func fetchImage(comletion: @escaping (Data?) -> Void) {
-        ImageManager.shared.fetchImageData(from: character.image) { data in
-            comletion(data)
         }
     }
 }

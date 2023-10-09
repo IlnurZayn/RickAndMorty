@@ -25,9 +25,8 @@ class CharacterDetailViewController: UIViewController {
             genderLabel.text = viewModel?.gender
             statusLabel.text = viewModel?.status
             
-            viewModel.fetchImage { data in
-                guard let data = data else { return }
-                self.mainImageView.image = UIImage(data: data)
+            if let url = URL(string: viewModel.image) {
+                mainImageView.kf.setImage(with: url)
             }
         }
     }
@@ -55,7 +54,7 @@ class CharacterDetailViewController: UIViewController {
     }
     
     //MARK: - Private properties
-    private lazy var mainImageView: UIImageView = {
+    private let mainImageView: UIImageView = {
         let mainImageView = UIImageView()
         mainImageView.clipsToBounds = true
         mainImageView.layer.cornerRadius = UIConstants.cornerRadiusForView
@@ -64,7 +63,7 @@ class CharacterDetailViewController: UIViewController {
         return mainImageView
     }()
     
-    private lazy var nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = .systemFont(ofSize: UIConstants.nameLabelFontSize, weight: .bold)
         nameLabel.clipsToBounds = true
@@ -76,7 +75,7 @@ class CharacterDetailViewController: UIViewController {
         return nameLabel
     }()
     
-    private lazy var characteristicsView: UIView = {
+    private let characteristicsView: UIView = {
         let characteristicsView = UIView()
         characteristicsView.backgroundColor = .backgroundGray
         characteristicsView.clipsToBounds = true
@@ -84,7 +83,7 @@ class CharacterDetailViewController: UIViewController {
         return characteristicsView
     }()
     
-    private lazy var spaciesTextLabel: UILabel = {
+    private let spaciesTextLabel: UILabel = {
         let spaciesTextLabel = UILabel()
         spaciesTextLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
         spaciesTextLabel.textColor = .textColor
@@ -92,7 +91,7 @@ class CharacterDetailViewController: UIViewController {
         return spaciesTextLabel
     }()
     
-    private lazy var spaciesLabel: UILabel = {
+    private let spaciesLabel: UILabel = {
         let spaciesLabel = UILabel()
         spaciesLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
         spaciesLabel.textColor = .textColor
@@ -100,7 +99,7 @@ class CharacterDetailViewController: UIViewController {
         return spaciesLabel
     }()
     
-    private lazy var genderTextLabel: UILabel = {
+    private let genderTextLabel: UILabel = {
         let genderTextLabel = UILabel()
         genderTextLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
         genderTextLabel.textColor = .textColor
@@ -108,7 +107,7 @@ class CharacterDetailViewController: UIViewController {
         return genderTextLabel
     }()
     
-    private lazy var genderLabel: UILabel = {
+    private let genderLabel: UILabel = {
         let genderLabel = UILabel()
         genderLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
         genderLabel.textColor = .textColor
@@ -116,7 +115,7 @@ class CharacterDetailViewController: UIViewController {
         return genderLabel
     }()
     
-    private lazy var statusTextLabel: UILabel = {
+    private let statusTextLabel: UILabel = {
         let statusTextLabel = UILabel()
         statusTextLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
         statusTextLabel.textColor = .textColor
@@ -124,7 +123,7 @@ class CharacterDetailViewController: UIViewController {
         return statusTextLabel
     }()
     
-    private lazy var statusLabel: UILabel = {
+    private let statusLabel: UILabel = {
         let statusLabel = UILabel()
         statusLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
         statusLabel.textColor = .textColor
@@ -132,7 +131,7 @@ class CharacterDetailViewController: UIViewController {
         return statusLabel
     }()
     
-    private lazy var favoriteBarButtonItem: UIBarButtonItem = {
+    private let favoriteBarButtonItem: UIBarButtonItem = {
         let favoriteBarButtonItem = UIBarButtonItem()
         favoriteBarButtonItem.image = UIImage(systemName: DefaultText.favoritesButton.rawValue)
         favoriteBarButtonItem.action = #selector(toggleFavorite)
