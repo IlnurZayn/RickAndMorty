@@ -94,8 +94,6 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
                 isFavorites = false
             }
         }
-        
-        
     }
     
     func search(by text: String) {

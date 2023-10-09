@@ -26,6 +26,16 @@ class CharacterCell: UICollectionViewCell {
         }
     }
     
+//    func configureCell(for character: Character) {
+//        characterNameLabel.text = character.name
+//        statusLabel.text = character.
+//        setStatusViewBackgroundColor(status: viewModel.status)
+//        
+//        if let url = URL(string: viewModel.image) {
+//            characterImageView.kf.setImage(with: url)
+//        }
+//    }
+    
     //MARK: - Status
     private enum Status: String {
         case alive = "Alive"
@@ -89,15 +99,21 @@ class CharacterCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        makeConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override func prepareForReuse() {
-//
-//    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        characterImageView.image = nil
+        characterNameLabel.text = nil
+        statusLabel.text = nil
+    }
+    
 }
 
 //MARK: - Private Methods
@@ -110,26 +126,30 @@ private extension CharacterCell {
         self.backgroundColor = .backgroundGrayColor
         
         contentView.addSubview(characterImageView)
+        contentView.addSubview(characterNameLabel)
+        contentView.addSubview(statusView)
+        contentView.addSubview(statusLabel)
+    }
+    
+    func makeConstraints() {
+        
         characterImageView.snp.makeConstraints { make in
             make.top.bottom.leading.equalToSuperview()
             make.width.equalTo(UIConstant.characterImageViewWidth)
         }
         
-        contentView.addSubview(characterNameLabel)
         characterNameLabel.snp.makeConstraints { make in
             make.leading.equalTo(characterImageView.snp.trailing).offset(UIConstant.imageToLabelOffset)
             make.top.trailing.equalToSuperview().inset(UIConstant.nameLabelInset)
             make.height.equalTo(UIConstant.nameLabelHeight)
         }
         
-        contentView.addSubview(statusView)
         statusView.snp.makeConstraints { make in
             make.leading.equalTo(characterNameLabel.snp.leading)
             make.width.height.equalTo(UIConstant.statusViewSize)
             make.centerY.equalTo(characterNameLabel.snp.bottom).offset(UIConstant.statusViewCenterToNameLabelOffset)
         }
         
-        contentView.addSubview(statusLabel)
         statusLabel.snp.makeConstraints { make in
             make.leading.equalTo(statusView.snp.trailing).offset(UIConstant.statusViewToStatusLabelOffset)
             make.centerY.equalTo(characterNameLabel.snp.bottom).offset(UIConstant.statusViewCenterToNameLabelOffset)

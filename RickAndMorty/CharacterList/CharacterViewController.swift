@@ -74,6 +74,7 @@ class CharacterViewController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
+        makeConstaints()
         addTargets()
     }
     
@@ -99,11 +100,14 @@ private extension CharacterViewController {
         viewModel = CharacterListViewModel()
 
         view.addSubview(characterCollectionView)
+        view.addSubview(segmentedControl)
+    }
+    
+    func makeConstaints() {
         characterCollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        view.addSubview(segmentedControl)
         segmentedControl.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(UIConstant.segmentedControlBottomInset)
             make.leading.trailing.equalToSuperview().inset(UIConstant.segmentedControlSidesInset)
@@ -172,10 +176,16 @@ extension CharacterViewController: UICollectionViewDelegateFlowLayout {
 //MARK: - UISearchBarDelegate
 extension CharacterViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        viewModel.search(by: "")
+        characterCollectionView.reloadData()
         searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        viewModel.search(by: "")
+        characterCollectionView.reloadData()
         searchBar.resignFirstResponder()
     }
     

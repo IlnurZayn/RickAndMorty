@@ -211,7 +211,11 @@ private extension CharacterDetailViewController {
         statusStackView.addArrangedSubview(statusLabel)
     }
     
-    func createStack() -> UIStackView {
+    func makeConstraints() {
+        
+    }
+    
+    func createStack() -> UIStackView { //!!!!!!!!!!!
         return UIStackView()
     }
     
