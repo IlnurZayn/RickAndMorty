@@ -20,13 +20,12 @@ protocol CharacterListViewModelProtocol: AnyObject {
     func filterCharacters(showFavoritesOnly: Bool, text: String)
     func search(by text: String)
     func numberOfItems() -> Int
-    func cellViewModel(at indexPath: IndexPath) -> CharacterCellViewModelProtocol
+    func currentCell(at indexPath: IndexPath) -> Character
     func viewModelForSelectedItem(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol
 }
 
 //MARK: - Class
 final class CharacterListViewModel: CharacterListViewModelProtocol {
-    
     
     var characters: [Character] = []
     
@@ -107,9 +106,8 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
         }
     }
     
-    func cellViewModel(at indexPath: IndexPath) -> CharacterCellViewModelProtocol {
-        let character = displayedCharacters[indexPath.item]
-        return CharacterCellViewModel(character: character)
+    func currentCell(at indexPath: IndexPath) -> Character {
+        return displayedCharacters[indexPath.item]
     }
     
     func viewModelForSelectedItem(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol {

@@ -148,7 +148,8 @@ extension CharacterViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterCell.identifier, 
                                                             for: indexPath) as? CharacterCell else { return UICollectionViewCell() }
         
-        cell.viewModel = viewModel.cellViewModel(at: indexPath)
+        let character = viewModel.currentCell(at: indexPath)
+        cell.configureCell(with: character)
         
         return cell
     }

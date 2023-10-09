@@ -14,28 +14,6 @@ class CharacterCell: UICollectionViewCell {
     //MARK: - Properties
     static let identifier = "CharacterCell"
     
-    var viewModel: CharacterCellViewModelProtocol! {
-        didSet {
-            characterNameLabel.text = viewModel.name
-            statusLabel.text = viewModel.fullStatus
-            setStatusViewBackgroundColor(status: viewModel.status)
-            
-            if let url = URL(string: viewModel.image) {
-                characterImageView.kf.setImage(with: url)
-            }
-        }
-    }
-    
-//    func configureCell(for character: Character) {
-//        characterNameLabel.text = character.name
-//        statusLabel.text = character.
-//        setStatusViewBackgroundColor(status: viewModel.status)
-//        
-//        if let url = URL(string: viewModel.image) {
-//            characterImageView.kf.setImage(with: url)
-//        }
-//    }
-    
     //MARK: - Status
     private enum Status: String {
         case alive = "Alive"
@@ -106,6 +84,7 @@ class CharacterCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Methods
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -114,6 +93,15 @@ class CharacterCell: UICollectionViewCell {
         statusLabel.text = nil
     }
     
+    func configureCell(with character: Character) {
+        characterNameLabel.text = character.name
+        statusLabel.text = "\(character.status) - \(character.species) - \(character.gender)"
+        setStatusViewBackgroundColor(status: character.status)
+        
+        if let url = URL(string: character.image) {
+            characterImageView.kf.setImage(with: url)
+        }
+    }
 }
 
 //MARK: - Private Methods
