@@ -19,7 +19,7 @@ struct Character: Decodable {
     let status: String
     let species: String
     let type: String
-    let gender: String  // enum
+    let gender: Gender
     let origin: Origin
     let location: Location
     let image: String
@@ -37,4 +37,10 @@ struct Location: Decodable {
 
 struct Origin: Decodable{
     let name: String
+}
+
+enum Gender: String, Decodable {
+    case female = "Female"
+    case male = "Male"
+    case unknown = "unknown"
 }

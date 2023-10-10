@@ -88,7 +88,7 @@ class CharacterCell: UICollectionViewCell {
     
     func configureCell(with character: Character) {
         characterNameLabel.text = character.name
-        statusLabel.text = "\(character.status) - \(character.species) - \(character.gender)"
+        statusLabel.text = "\(character.status) - \(character.species) - \(character.gender.rawValue)"
         setStatusViewBackgroundColor(status: character.status)
         
         if let url = URL(string: character.image) {

@@ -39,7 +39,7 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
     }
     
     var gender: String {
-        character.gender
+        character.gender.rawValue
     }
     
     var status: String {

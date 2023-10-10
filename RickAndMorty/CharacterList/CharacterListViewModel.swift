@@ -108,8 +108,7 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
     }
     
     func updateCollectionView(forItemAt indexPath: IndexPath, completion: @escaping () -> Void) {
-        guard let pages = pages else { return }
-        guard currentPage <= pages else { return }
+        guard let pages, currentPage <= pages else { return }
         
         if indexPath.item == characters.count - 1 {
             self.currentPage += 1

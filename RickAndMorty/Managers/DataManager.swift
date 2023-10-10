@@ -13,6 +13,8 @@ final class DataManager {
     
     private let userDefaults = UserDefaults()
     
+    var savedElements = [Int]()
+    
     init() { }
     
     func setFavoriteStatus(for character: String, with status: Bool) {

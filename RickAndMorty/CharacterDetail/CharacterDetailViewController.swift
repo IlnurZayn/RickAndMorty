@@ -158,20 +158,10 @@ private extension CharacterDetailViewController {
         navigationController?.navigationBar.isHidden = false
         navigationItem.rightBarButtonItem = favoriteBarButtonItem
         favoriteBarButtonItem.target = self
-
-//        mainStackView.axis = .vertical
-//        mainStackView.spacing = UIConstants.mainStackViewSpacing
-//        
-//        characteristicsStackView.axis = .vertical
-//        characteristicsStackView.distribution = .equalSpacing
         
         configure(for: mainStackView, axis: .vertical, spacing: UIConstants.mainStackViewSpacing)
         configure(for: characteristicsStackView, axis: .vertical)
-        
-        configure(for: speciesStackView,
-                  statusStackView,
-                  genderStackView,
-                  axis: .horizontal)
+        configure(for: speciesStackView, statusStackView, genderStackView, axis: .horizontal)
     }
     
     func addSubviews() {
