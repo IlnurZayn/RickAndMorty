@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46982DF02AD47954000A5C37 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46982DEF2AD47954000A5C37 /* Constant.swift */; };
 		46D2347E2AC76CF800F2FC0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D2347D2AC76CF800F2FC0D /* AppDelegate.swift */; };
 		46D234802AC76CF800F2FC0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D2347F2AC76CF800F2FC0D /* SceneDelegate.swift */; };
 		46D234822AC76CF800F2FC0D /* CharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D234812AC76CF800F2FC0D /* CharacterViewController.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		46982DEF2AD47954000A5C37 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		46D2347A2AC76CF800F2FC0D /* RickAndMorty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMorty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46D2347D2AC76CF800F2FC0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46D2347F2AC76CF800F2FC0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,7 +89,7 @@
 				46D234B42ACA08DC00F2FC0D /* CharacterDetail */,
 				46D234AC2AC9C69100F2FC0D /* Managers */,
 				46D234A42AC8C92D00F2FC0D /* Extensions */,
-				46D234972AC76FEA00F2FC0D /* API */,
+				46D234972AC76FEA00F2FC0D /* Other */,
 				46D234912AC76D3D00F2FC0D /* Supporting Files */,
 				46D2348B2AC76CF900F2FC0D /* Info.plist */,
 			);
@@ -105,12 +107,13 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		46D234972AC76FEA00F2FC0D /* API */ = {
+		46D234972AC76FEA00F2FC0D /* Other */ = {
 			isa = PBXGroup;
 			children = (
 				46D2349C2AC7704B00F2FC0D /* API.swift */,
+				46982DEF2AD47954000A5C37 /* Constant.swift */,
 			);
-			path = API;
+			path = Other;
 			sourceTree = "<group>";
 		};
 		46D234982AC76FFC00F2FC0D /* Model */ = {
@@ -254,6 +257,7 @@
 				46D234822AC76CF800F2FC0D /* CharacterViewController.swift in Sources */,
 				46D234C12ACC7A6100F2FC0D /* DataManager.swift in Sources */,
 				46D2347E2AC76CF800F2FC0D /* AppDelegate.swift in Sources */,
+				46982DF02AD47954000A5C37 /* Constant.swift in Sources */,
 				46D234802AC76CF800F2FC0D /* SceneDelegate.swift in Sources */,
 				46D234A12AC8350B00F2FC0D /* CharacterCell.swift in Sources */,
 				46D234A82AC98E5300F2FC0D /* CharacterModel.swift in Sources */,

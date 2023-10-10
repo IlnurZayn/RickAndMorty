@@ -33,12 +33,6 @@ class CharacterDetailViewController: UIViewController {
     
     //MARK: - UIConstants
     private enum UIConstants {
-        static let cornerRadiusForView: CGFloat = 10.0
-        
-        static let nameLabelFontSize: CGFloat = 26.0
-        static let descriptionLabelFontSize: CGFloat = 17.0
-        
-        static let subViewToSuperViewInsetOffset: CGFloat = 16.0
         static let mainStackViewSpacing: CGFloat = 30.0
         static let nameLabelHeight: CGFloat = 40.0
         static let mainStackViewHeight: CGFloat = 120
@@ -57,18 +51,18 @@ class CharacterDetailViewController: UIViewController {
     private let mainImageView: UIImageView = {
         let mainImageView = UIImageView()
         mainImageView.clipsToBounds = true
-        mainImageView.layer.cornerRadius = UIConstants.cornerRadiusForView
+        mainImageView.layer.cornerRadius = Constant.CornerRadius.ten
         mainImageView.contentMode = .scaleAspectFill
-        mainImageView.image = UIImage(named: DefaultText.unknow.rawValue)
+        mainImageView.image = Constant.BackgroundImage.image
         return mainImageView
     }()
     
     private let nameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.font = .systemFont(ofSize: UIConstants.nameLabelFontSize, weight: .bold)
+        nameLabel.font = .systemFont(ofSize: Constant.FontSize.nameFontSize, weight: .bold)
         nameLabel.clipsToBounds = true
         nameLabel.textAlignment = .center
-        nameLabel.layer.cornerRadius = UIConstants.cornerRadiusForView
+        nameLabel.layer.cornerRadius = Constant.CornerRadius.ten
         nameLabel.backgroundColor = .backgroundGray
         nameLabel.textColor = .textColor
         nameLabel.text = DefaultText.unknow.rawValue
@@ -79,13 +73,13 @@ class CharacterDetailViewController: UIViewController {
         let characteristicsView = UIView()
         characteristicsView.backgroundColor = .backgroundGray
         characteristicsView.clipsToBounds = true
-        characteristicsView.layer.cornerRadius = UIConstants.cornerRadiusForView
+        characteristicsView.layer.cornerRadius = Constant.CornerRadius.ten
         return characteristicsView
     }()
     
     private let spaciesTextLabel: UILabel = {
         let spaciesTextLabel = UILabel()
-        spaciesTextLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
+        spaciesTextLabel.font = .systemFont(ofSize: Constant.FontSize.descriptionFontSize, weight: .regular)
         spaciesTextLabel.textColor = .textColor
         spaciesTextLabel.text = DefaultText.species.rawValue
         return spaciesTextLabel
@@ -93,7 +87,7 @@ class CharacterDetailViewController: UIViewController {
     
     private let spaciesLabel: UILabel = {
         let spaciesLabel = UILabel()
-        spaciesLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
+        spaciesLabel.font = .systemFont(ofSize: Constant.FontSize.descriptionFontSize, weight: .regular)
         spaciesLabel.textColor = .textColor
         spaciesLabel.text = DefaultText.unknow.rawValue
         return spaciesLabel
@@ -101,7 +95,7 @@ class CharacterDetailViewController: UIViewController {
     
     private let genderTextLabel: UILabel = {
         let genderTextLabel = UILabel()
-        genderTextLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
+        genderTextLabel.font = .systemFont(ofSize: Constant.FontSize.descriptionFontSize, weight: .regular)
         genderTextLabel.textColor = .textColor
         genderTextLabel.text = DefaultText.gender.rawValue
         return genderTextLabel
@@ -109,7 +103,7 @@ class CharacterDetailViewController: UIViewController {
     
     private let genderLabel: UILabel = {
         let genderLabel = UILabel()
-        genderLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
+        genderLabel.font = .systemFont(ofSize: Constant.FontSize.descriptionFontSize, weight: .regular)
         genderLabel.textColor = .textColor
         genderLabel.text = DefaultText.unknow.rawValue
         return genderLabel
@@ -117,7 +111,7 @@ class CharacterDetailViewController: UIViewController {
     
     private let statusTextLabel: UILabel = {
         let statusTextLabel = UILabel()
-        statusTextLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
+        statusTextLabel.font = .systemFont(ofSize: Constant.FontSize.descriptionFontSize, weight: .regular)
         statusTextLabel.textColor = .textColor
         statusTextLabel.text = DefaultText.status.rawValue
         return statusTextLabel
@@ -125,7 +119,7 @@ class CharacterDetailViewController: UIViewController {
     
     private let statusLabel: UILabel = {
         let statusLabel = UILabel()
-        statusLabel.font = .systemFont(ofSize: UIConstants.descriptionLabelFontSize, weight: .regular)
+        statusLabel.font = .systemFont(ofSize: Constant.FontSize.descriptionFontSize, weight: .regular)
         statusLabel.textColor = .textColor
         statusLabel.text = DefaultText.unknow.rawValue
         return statusLabel
@@ -138,12 +132,20 @@ class CharacterDetailViewController: UIViewController {
         return favoriteBarButtonItem
     }()
     
+    private let mainStackView = UIStackView()
+    private let characteristicsStackView = UIStackView()
+    private let speciesStackView = UIStackView()
+    private let genderStackView = UIStackView()
+    private let statusStackView = UIStackView()
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
+        addSubviews()
         addTargets()
+        makeConstraints()
     }
 }
 
@@ -157,73 +159,77 @@ private extension CharacterDetailViewController {
         navigationItem.rightBarButtonItem = favoriteBarButtonItem
         favoriteBarButtonItem.target = self
 
-        let mainStackView = UIStackView()
+//        mainStackView.axis = .vertical
+//        mainStackView.spacing = UIConstants.mainStackViewSpacing
+//        
+//        characteristicsStackView.axis = .vertical
+//        characteristicsStackView.distribution = .equalSpacing
+        
+        configure(for: mainStackView, axis: .vertical, spacing: UIConstants.mainStackViewSpacing)
+        configure(for: characteristicsStackView, axis: .vertical)
+        
+        configure(for: speciesStackView,
+                  statusStackView,
+                  genderStackView,
+                  axis: .horizontal)
+    }
+    
+    func addSubviews() {
         view.addSubview(mainStackView)
-        mainStackView.axis = .vertical
-        mainStackView.spacing = UIConstants.mainStackViewSpacing
-        mainStackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(UIConstants.subViewToSuperViewInsetOffset)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(UIConstants.subViewToSuperViewInsetOffset)
-        }
         
         mainStackView.addArrangedSubview(mainImageView)
-        mainImageView.snp.makeConstraints { make in
-            make.height.equalTo(mainImageView.snp.width)
-        }
-        
         mainStackView.addArrangedSubview(nameLabel)
-        nameLabel.snp.makeConstraints { make in
-            make.height.equalTo(UIConstants.nameLabelHeight)
-        }
-        
         mainStackView.addArrangedSubview(characteristicsView)
-        characteristicsView.snp.makeConstraints { make in
-            make.height.equalTo(UIConstants.mainStackViewHeight)
-        }
         
-        let characteristicsStackView = UIStackView()
         characteristicsView.addSubview(characteristicsStackView)
-        characteristicsStackView.axis = .vertical
-        characteristicsStackView.distribution = .equalSpacing
-        characteristicsStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(UIConstants.subViewToSuperViewInsetOffset)
-        }
         
-        //MARK: - // убрать повторения
-        
-        let speciesStackView = UIStackView()
         characteristicsStackView.addArrangedSubview(speciesStackView)
-        speciesStackView.axis = .horizontal
-        speciesStackView.distribution = .equalSpacing
+        characteristicsStackView.addArrangedSubview(genderStackView)
+        characteristicsStackView.addArrangedSubview(statusStackView)
+        
         speciesStackView.addArrangedSubview(spaciesTextLabel)
         speciesStackView.addArrangedSubview(spaciesLabel)
         
-        let genderStackView = UIStackView()
-        characteristicsStackView.addArrangedSubview(genderStackView)
-        genderStackView.axis = .horizontal
-        genderStackView.distribution = .equalSpacing
         genderStackView.addArrangedSubview(genderTextLabel)
         genderStackView.addArrangedSubview(genderLabel)
         
-        let statusStackView = UIStackView()
-        characteristicsStackView.addArrangedSubview(statusStackView)
-        genderStackView.axis = .horizontal
-        statusStackView.distribution = .equalSpacing
         statusStackView.addArrangedSubview(statusTextLabel)
         statusStackView.addArrangedSubview(statusLabel)
     }
     
     func makeConstraints() {
+        mainStackView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(Constant.InsetOffset.sixteenInsetOffset)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constant.InsetOffset.sixteenInsetOffset)
+        }
         
+        mainImageView.snp.makeConstraints { make in
+            make.height.equalTo(mainImageView.snp.width)
+        }
+        
+        nameLabel.snp.makeConstraints { make in
+            make.height.equalTo(UIConstants.nameLabelHeight)
+        }
+        
+        characteristicsView.snp.makeConstraints { make in
+            make.height.equalTo(UIConstants.mainStackViewHeight)
+        }
+        
+        characteristicsStackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(Constant.InsetOffset.sixteenInsetOffset)
+        }
     }
     
     func addTargets() {
         favoriteBarButtonItem.action = #selector(toggleFavorite)
     }
-    
-    //MARK: - Сделать общий стэк вью
-    func createStack() -> UIStackView { //!!!!!!!!!!!
-        return UIStackView()
+
+    func configure(for stackViews: UIStackView..., axis: NSLayoutConstraint.Axis, spacing: CGFloat = 0.0) {
+        for stackView in stackViews {
+            stackView.axis = axis
+            stackView.spacing = spacing
+            stackView.distribution = .equalSpacing
+        }
     }
     
     func setStatusForFavoriteButton() {

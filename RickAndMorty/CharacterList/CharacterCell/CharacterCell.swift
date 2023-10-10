@@ -23,19 +23,10 @@ class CharacterCell: UICollectionViewCell {
     
     //MARK: - UIConstants
     private enum UIConstant {
-        static let nameLabelFontSize: CGFloat = 26.0
-        static let statusLabelFontSize: CGFloat = 17.0
         static let characterImageViewWidth: CGFloat = 100.0
-        static let cornerRadiusSize: CGFloat = 10.0
-        static let imageToLabelOffset: CGFloat = 10.0
-        static let nameLabelInset: CGFloat = 10.0
         static let nameLabelHeight: CGFloat = 30.0
-        static let statusViewCenterToNameLabelOffset: CGFloat = 20.0
-        static let statusViewToStatusLabelOffset: CGFloat = 10.0
-        static let statusStackInset: CGFloat = 10.0
-        static let statucLabelToNameLabeelOffset: CGFloat = 5.0
         static let statusViewSize: CGFloat = 10.0
-        static let statusViewInset: CGFloat = 10.0
+        static let statusViewCenterToNameLabelOffset: CGFloat = 20.0
     }
     
     //MARK: - Private properties
@@ -44,7 +35,7 @@ class CharacterCell: UICollectionViewCell {
         characterImageView.backgroundColor = .backgroundDarkGrayColor
         characterImageView.clipsToBounds = true
         characterImageView.contentMode = .scaleAspectFill
-        characterImageView.image = UIImage(named: "Unknow")
+        characterImageView.image = Constant.BackgroundImage.image
         return characterImageView
     }()
     
@@ -61,7 +52,7 @@ class CharacterCell: UICollectionViewCell {
         let characterNameLabel = UILabel()
         characterNameLabel.textColor = .textColor
         characterNameLabel.text = "Unknow"
-        characterNameLabel.font = .boldSystemFont(ofSize: UIConstant.nameLabelFontSize)
+        characterNameLabel.font = .boldSystemFont(ofSize: Constant.FontSize.nameFontSize)
         return characterNameLabel
     }()
     
@@ -69,7 +60,7 @@ class CharacterCell: UICollectionViewCell {
         let statusLabel = UILabel()
         statusLabel.textColor = .textColor
         statusLabel.text = "Unknow"
-        statusLabel.font = .systemFont(ofSize: UIConstant.statusLabelFontSize)
+        statusLabel.font = .systemFont(ofSize: Constant.FontSize.descriptionFontSize)
         return statusLabel
     }()
     
@@ -111,7 +102,7 @@ private extension CharacterCell {
 
     func configureUI() {
         
-        self.layer.cornerRadius = UIConstant.cornerRadiusSize
+        self.layer.cornerRadius = Constant.CornerRadius.ten
         self.clipsToBounds = true
         self.backgroundColor = .backgroundGrayColor
     }
@@ -131,8 +122,8 @@ private extension CharacterCell {
         }
         
         characterNameLabel.snp.makeConstraints { make in
-            make.leading.equalTo(characterImageView.snp.trailing).offset(UIConstant.imageToLabelOffset)
-            make.top.trailing.equalToSuperview().inset(UIConstant.nameLabelInset)
+            make.leading.equalTo(characterImageView.snp.trailing).offset(Constant.InsetOffset.eightInsetOffset)
+            make.top.trailing.equalToSuperview().inset(Constant.InsetOffset.eightInsetOffset)
             make.height.equalTo(UIConstant.nameLabelHeight)
         }
         
@@ -143,7 +134,8 @@ private extension CharacterCell {
         }
         
         statusLabel.snp.makeConstraints { make in
-            make.leading.equalTo(statusView.snp.trailing).offset(UIConstant.statusViewToStatusLabelOffset)
+            make.leading.equalTo(statusView.snp.trailing).offset(Constant.InsetOffset.eightInsetOffset)
+            make.trailing.equalToSuperview().inset(Constant.InsetOffset.eightInsetOffset)
             make.centerY.equalTo(characterNameLabel.snp.bottom).offset(UIConstant.statusViewCenterToNameLabelOffset)
         }
     }

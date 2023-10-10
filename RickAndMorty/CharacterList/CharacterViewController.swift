@@ -12,10 +12,6 @@ class CharacterViewController: UIViewController {
     //MARK: - UIConstants
     private enum UIConstant {
         static let cellHeight: CGFloat = 80.0
-        static let cellWidthInset = 16.0
-        static let fromSuperViewToCollectionViewInset: CGFloat = 16.0
-        static let itemsEdgeInset: CGFloat = 16.0
-        static let minimumLineSpacing: CGFloat = 16.0
         static let segmentedControlBottomInset: CGFloat = 50.0
         static let segmentedControlSidesInset: CGFloat = 80.0
         static let segmentsTitles = ["All", "Favorites"]
@@ -97,8 +93,10 @@ private extension CharacterViewController {
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.isHidden = false
         navigationItem.titleView = searchBar
+        
         characterCollectionView.subscribe(self)
         searchBar.delegate = self
+        
         viewModel.fetchPages {
             self.viewModel.fetchCharacters {
                 self.characterCollectionView.reloadData()
@@ -118,7 +116,7 @@ private extension CharacterViewController {
         
         segmentedControl.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(UIConstant.segmentedControlBottomInset)
-            make.leading.trailing.equalToSuperview().inset(UIConstant.segmentedControlSidesInset)
+            make.directionalHorizontalEdges.equalToSuperview().inset(UIConstant.segmentedControlSidesInset)
         }
     }
     
@@ -145,6 +143,12 @@ extension CharacterViewController: UICollectionViewDelegate {
         characterDetailViewController.viewModel = viewModel.viewModelForSelectedItem(at: indexPath) as? CharacterDetailViewModel
         navigationController?.pushViewController(characterDetailViewController, animated: true)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        viewModel.updateCollectionView(forItemAt: indexPath) {
+            self.characterCollectionView.reloadData()
+        }
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -169,17 +173,20 @@ extension CharacterViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let cellWidth = collectionView.frame.width - UIConstant.cellWidthInset * 2
+        let cellWidth = collectionView.frame.width - Constant.InsetOffset.sixteenInsetOffset * 2
         
         return CGSize(width: cellWidth, height: UIConstant.cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: UIConstant.itemsEdgeInset, left: UIConstant.itemsEdgeInset, bottom: UIConstant.itemsEdgeInset, right: UIConstant.itemsEdgeInset)
+        return UIEdgeInsets(top: Constant.InsetOffset.sixteenInsetOffset,
+                            left: Constant.InsetOffset.sixteenInsetOffset,
+                            bottom: Constant.InsetOffset.sixteenInsetOffset,
+                            right: Constant.InsetOffset.sixteenInsetOffset)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return UIConstant.minimumLineSpacing
+        return Constant.InsetOffset.sixteenInsetOffset
     }
 }
 

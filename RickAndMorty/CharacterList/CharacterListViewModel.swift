@@ -12,6 +12,7 @@ protocol CharacterListViewModelProtocol: AnyObject {
     var characters: [Character] { get }
     var favoritesCharacters: [Character] { get }
     var displayedCharacters: [Character] { get }
+    var currentPage: Int { get }
     var pages: Int? { get }
     var isFavorites: Bool { get }
 
@@ -22,6 +23,7 @@ protocol CharacterListViewModelProtocol: AnyObject {
     func numberOfItems() -> Int
     func currentCell(at indexPath: IndexPath) -> Character
     func viewModelForSelectedItem(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol
+    func updateCollectionView(forItemAt indexPath: IndexPath, completion: @escaping () -> Void)
 }
 
 //MARK: - Class
@@ -32,6 +34,8 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
     var favoritesCharacters: [Character] = []
     
     var displayedCharacters: [Character] = []
+    
+    var currentPage: Int = 1
     
     var pages: Int?
     
@@ -47,25 +51,13 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
     
     func fetchCharacters(completion: @escaping () -> Void) {
         
-        guard let pages = self.pages else { return }
-        
-        let dispatchGroup = DispatchGroup()
-        
-        for page in 1...pages {
-            
-            dispatchGroup.enter()
-            
-            NetworkManager.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue + Endpoint.page.rawValue + "\(page)",
-                                            dataType: CharacterModel.self) { result in
-                self.characters.append(contentsOf: result.results)
-                self.displayedCharacters = self.characters
-                dispatchGroup.leave()
-            }
+        NetworkManager.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue + Endpoint.page.rawValue + "\(currentPage)",
+                                        dataType: CharacterModel.self) { result in
+            self.characters.append(contentsOf: result.results)
+            self.displayedCharacters = self.characters
         }
         
-        dispatchGroup.notify(queue: .main) {
-            completion()
-        }
+        completion()
     }
     
     func numberOfItems() -> Int {
@@ -113,5 +105,17 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
     func viewModelForSelectedItem(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol {
         let character = displayedCharacters[indexPath.item]
         return CharacterDetailViewModel(character: character)
+    }
+    
+    func updateCollectionView(forItemAt indexPath: IndexPath, completion: @escaping () -> Void) {
+        guard let pages = pages else { return }
+        guard currentPage <= pages else { return }
+        
+        if indexPath.item == characters.count - 1 {
+            self.currentPage += 1
+            fetchCharacters {
+                completion()
+            }
+        }
     }
 }
