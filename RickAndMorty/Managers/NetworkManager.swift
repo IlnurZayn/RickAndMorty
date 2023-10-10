@@ -23,7 +23,7 @@ final class NetworkManager {
             case .success(let data):
                 completion(data)
             case .failure(let error):
-                print(error.localizedDescription)
+                print(String(describing: error))
             }
         }
     }

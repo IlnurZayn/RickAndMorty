@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct CharacterModel: Decodable {
+struct CharacterModel: Codable {
     let info: Info
     let results: [Character]
 }
 
-struct Character: Decodable {
+struct Character: Codable {
     let id: Int
     let name: String
     let status: String
@@ -27,19 +27,20 @@ struct Character: Decodable {
     let url: String
 }
 
-struct Info: Decodable {
+struct Info: Codable {
     let count, pages: Int
 }
 
-struct Location: Decodable {
+struct Location: Codable {
     let name: String
 }
 
-struct Origin: Decodable{
+struct Origin: Codable {
     let name: String
 }
 
-enum Gender: String, Decodable {
+enum Gender: String, Codable {
+    case genderless = "Genderless"
     case female = "Female"
     case male = "Male"
     case unknown = "unknown"

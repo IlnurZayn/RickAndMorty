@@ -50,7 +50,7 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
     }
     
     func fetchCharacters(completion: @escaping () -> Void) {
-        
+
         NetworkManager.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue + Endpoint.page.rawValue + "\(currentPage)",
                                         dataType: CharacterModel.self) { result in
             self.characters.append(contentsOf: result.results)
