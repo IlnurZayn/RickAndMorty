@@ -14,14 +14,14 @@ class CharacterCell: UICollectionViewCell {
     //MARK: - Properties
     static let identifier = "CharacterCell"
     
-    //MARK: - Status
+    
+    //MARK: - Private enums
     private enum Status: String {
         case alive = "Alive"
         case dead = "Dead"
         case unknown = "unknown"
     }
-    
-    //MARK: - UIConstants
+
     private enum UIConstant {
         static let characterImageViewWidth: CGFloat = 100.0
         static let nameLabelHeight: CGFloat = 30.0
@@ -91,9 +91,8 @@ class CharacterCell: UICollectionViewCell {
         statusLabel.text = "\(character.status) - \(character.species) - \(character.gender.rawValue)"
         setStatusViewBackgroundColor(status: character.status)
         
-        if let url = URL(string: character.image) {
-            characterImageView.kf.setImage(with: url)
-        }
+        guard let url = URL(string: character.image) else { return }
+        characterImageView.kf.setImage(with: url)
     }
 }
 
@@ -101,7 +100,6 @@ class CharacterCell: UICollectionViewCell {
 private extension CharacterCell {
 
     func configureUI() {
-        
         self.layer.cornerRadius = Constant.CornerRadius.ten
         self.clipsToBounds = true
         self.backgroundColor = .backgroundGrayColor
@@ -115,7 +113,6 @@ private extension CharacterCell {
     }
     
     func makeConstraints() {
-        
         characterImageView.snp.makeConstraints { make in
             make.top.bottom.leading.equalToSuperview()
             make.width.equalTo(UIConstant.characterImageViewWidth)

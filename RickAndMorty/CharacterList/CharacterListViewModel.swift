@@ -50,7 +50,7 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
     }
     
     func fetchCharacters(completion: @escaping () -> Void) {
-
+        
         NetworkManager.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue + Endpoint.page.rawValue + "\(currentPage)",
                                         dataType: CharacterModel.self) { result in
             self.characters.append(contentsOf: result.results)
@@ -110,7 +110,7 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
     func updateCollectionView(forItemAt indexPath: IndexPath, completion: @escaping () -> Void) {
         guard let pages, currentPage <= pages else { return }
         
-        if indexPath.item == characters.count - 1 {
+        if indexPath.item == (characters.count - 1) {
             self.currentPage += 1
             fetchCharacters {
                 completion()

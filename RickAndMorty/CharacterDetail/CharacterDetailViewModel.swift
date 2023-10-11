@@ -50,7 +50,9 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
         get {
             return DataManager.shared.getFavoriteStatus(for: character.id)
         } set {
-            DataManager.shared.getFavoriteStatus(for: character.id) ? DataManager.shared.removeValue(for: character.id) : DataManager.shared.setFavoriteStatus(for: character.id)
+            DataManager.shared.getFavoriteStatus(for: character.id) ? 
+            DataManager.shared.removeValue(for: character.id) :
+            DataManager.shared.setFavoriteStatus(for: character.id)
             viewModelDidChange?(self)
         }
     }

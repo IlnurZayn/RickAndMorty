@@ -152,7 +152,6 @@ class CharacterDetailViewController: UIViewController {
 private extension CharacterDetailViewController {
     
     func configureUI() {
-        
         self.view.backgroundColor = .backgroundDarkGray
         navigationController?.navigationBar.isHidden = false
         navigationItem.rightBarButtonItem = favoriteBarButtonItem
