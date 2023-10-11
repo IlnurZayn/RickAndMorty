@@ -20,7 +20,7 @@ protocol CharacterDetailViewModelProtocol: AnyObject {
     init(character: Character)
     
     func favoriteButtonPressed()
-    func deleteCharacter(forFalse false: Bool)
+    func deleteCharacter(with value: Bool)
 }
 
 //MARK: - Class
@@ -48,10 +48,9 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
     
     var isFavorite: Bool {
         get {
-            DataManager.shared.getFavoriteStatus(for: character.image)
-        }
-        set {
-            DataManager.shared.setFavoriteStatus(for: character.image, with: newValue)
+            return DataManager.shared.getFavoriteStatus(for: character.id)
+        } set {
+            DataManager.shared.getFavoriteStatus(for: character.id) ? DataManager.shared.removeValue(for: character.id) : DataManager.shared.setFavoriteStatus(for: character.id)
             viewModelDidChange?(self)
         }
     }
@@ -68,9 +67,9 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
         isFavorite.toggle()
     }
     
-    func deleteCharacter(forFalse: Bool) {
-        if !forFalse {
-            DataManager.shared.removeValue(for: character.image)
+    func deleteCharacter(with value: Bool) {
+        if !value {
+            DataManager.shared.removeValue(for: character.id)
         }
     }
 }

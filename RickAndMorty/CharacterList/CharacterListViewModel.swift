@@ -68,7 +68,7 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
         if text != "" {
             if showFavoritesOnly {
                 isFavorites = true
-                favoritesCharacters = characters.filter { DataManager.shared.getAllKeys().contains($0.image) }
+                favoritesCharacters = characters.filter { DataManager.shared.getFavorites().contains($0.id) }
                 displayedCharacters = favoritesCharacters
                 search(by: text)
             } else {
@@ -77,7 +77,7 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
             }
         } else {
             if showFavoritesOnly {
-                favoritesCharacters = characters.filter { DataManager.shared.getAllKeys().contains($0.image) }
+                favoritesCharacters = characters.filter { DataManager.shared.getFavorites().contains($0.id) }
                 displayedCharacters = favoritesCharacters
                 isFavorites = true
             } else {

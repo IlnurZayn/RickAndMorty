@@ -15,7 +15,6 @@ class CharacterDetailViewController: UIViewController {
         didSet {
             viewModel.viewModelDidChange = { [unowned self] viewModel in
                 setStatusForFavoriteButton()
-                viewModel.deleteCharacter(forFalse: viewModel.isFavorite)
             }
             
             setStatusForFavoriteButton()

@@ -11,25 +11,36 @@ final class DataManager {
     
     static let shared = DataManager()
     
-    private let userDefaults = UserDefaults()
-    
-    var savedElements = [Int]()
+    private let userDefaults = UserDefaults.standard
+    private let characterIdKey = "id"
     
     init() { }
     
-    func setFavoriteStatus(for character: String, with status: Bool) {
-        userDefaults.setValue(status, forKey: character)
+    func setFavoriteStatus(for character: Int) {
+        guard var values = userDefaults.array(forKey: DataManager.shared.characterIdKey) as? [Int] else {
+            let firstId = [character]
+            userDefaults.set(firstId, forKey: DataManager.shared.characterIdKey)
+            return
+        }
+        
+        values.append(character)
+        userDefaults.set(values, forKey: DataManager.shared.characterIdKey)
+    }
+
+    func getFavoriteStatus(for character: Int) -> Bool {
+        guard let values = userDefaults.array(forKey: DataManager.shared.characterIdKey) as? [Int] else { return false }
+        return values.contains(character)
     }
     
-    func getFavoriteStatus(for character: String) -> Bool {
-        userDefaults.bool(forKey: character)
+    func removeValue(for character: Int) {
+        guard var values = userDefaults.array(forKey: DataManager.shared.characterIdKey) as? [Int],
+              let index = values.firstIndex(of: character) else { return }
+        values.remove(at: index)
+        userDefaults.set(values, forKey: DataManager.shared.characterIdKey)
     }
     
-    func removeValue(for character: String) {
-        userDefaults.removeObject(forKey: character)
-    }
-    
-    func getAllKeys() -> [String] {
-        Array(DataManager.shared.userDefaults.dictionaryRepresentation().keys)
+    func getFavorites() -> [Int] {
+        guard let values = userDefaults.array(forKey: DataManager.shared.characterIdKey) as? [Int] else { return [] }
+        return values
     }
 }
