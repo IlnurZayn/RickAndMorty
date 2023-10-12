@@ -70,8 +70,7 @@ final class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
     }
     
     func deleteCharacter(with value: Bool) {
-        if !value {
-            DataManager.shared.removeValue(for: character.id)
-        }
+        guard !value else { return }
+        DataManager.shared.removeValue(for: character.id)
     }
 }

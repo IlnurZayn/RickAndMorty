@@ -10,8 +10,11 @@ import UIKit
 struct Constant {
     
     enum InsetOffset {
-        static let sixteenInsetOffset: CGFloat = 16.0
-        static let eightInsetOffset: CGFloat = 8.0
+        static let s: CGFloat = 8.0
+        static let m: CGFloat = 12.0
+        static let l: CGFloat = 16.0
+        static let xl: CGFloat = 20.0
+        static let xxl: CGFloat = 24.0
     }
     
     enum FontSize {
@@ -24,6 +27,6 @@ struct Constant {
     }
     
     enum CornerRadius {
-        static let ten: CGFloat = 10.0
+        static let s: CGFloat = 10.0
     }
 }

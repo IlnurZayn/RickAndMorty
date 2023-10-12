@@ -100,7 +100,7 @@ class CharacterCell: UICollectionViewCell {
 private extension CharacterCell {
 
     func configureUI() {
-        self.layer.cornerRadius = Constant.CornerRadius.ten
+        self.layer.cornerRadius = Constant.CornerRadius.s
         self.clipsToBounds = true
         self.backgroundColor = .backgroundGrayColor
     }
@@ -119,8 +119,8 @@ private extension CharacterCell {
         }
         
         characterNameLabel.snp.makeConstraints { make in
-            make.leading.equalTo(characterImageView.snp.trailing).offset(Constant.InsetOffset.eightInsetOffset)
-            make.top.trailing.equalToSuperview().inset(Constant.InsetOffset.eightInsetOffset)
+            make.leading.equalTo(characterImageView.snp.trailing).offset(Constant.InsetOffset.s)
+            make.top.trailing.equalToSuperview().inset(Constant.InsetOffset.s)
             make.height.equalTo(UIConstant.nameLabelHeight)
         }
         
@@ -131,8 +131,8 @@ private extension CharacterCell {
         }
         
         statusLabel.snp.makeConstraints { make in
-            make.leading.equalTo(statusView.snp.trailing).offset(Constant.InsetOffset.eightInsetOffset)
-            make.trailing.equalToSuperview().inset(Constant.InsetOffset.eightInsetOffset)
+            make.leading.equalTo(statusView.snp.trailing).offset(Constant.InsetOffset.s)
+            make.trailing.equalToSuperview().inset(Constant.InsetOffset.s)
             make.centerY.equalTo(characterNameLabel.snp.bottom).offset(UIConstant.statusViewCenterToNameLabelOffset)
         }
     }

@@ -22,10 +22,10 @@ class CharacterViewController: UIViewController {
     private var viewModel: CharacterListViewModel!
     
     private let characterCollectionView: UICollectionView = {
-        let loyaut = UICollectionViewFlowLayout()
-        loyaut.scrollDirection = .vertical
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
         
-        let characterCollectionView = UICollectionView(frame: .zero, collectionViewLayout: loyaut)
+        let characterCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         characterCollectionView.register(CharacterCell.self, forCellWithReuseIdentifier: CharacterCell.identifier)
         characterCollectionView.backgroundColor = .backgroundDarkGrayColor
         characterCollectionView.showsVerticalScrollIndicator = false
@@ -57,6 +57,12 @@ class CharacterViewController: UIViewController {
         return segmentedControl
     }()
     
+    private let refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .acidColor
+        return refreshControl
+    }()
+    
     //MARK: - Init
     init(viewModel: CharacterListViewModel!) {
         self.viewModel = viewModel
@@ -73,7 +79,7 @@ class CharacterViewController: UIViewController {
         
         configureUI()
         addSubviews()
-        makeConstaints()
+        makeConstraints()
         addTargets()
     }
     
@@ -89,18 +95,16 @@ class CharacterViewController: UIViewController {
 private extension CharacterViewController {
     
     func configureUI() {
-        
         navigationItem.backButtonTitle = ""
-        navigationController?.navigationBar.isHidden = false
         navigationItem.titleView = searchBar
         
+        characterCollectionView.refreshControl = refreshControl
         characterCollectionView.subscribe(self)
         searchBar.delegate = self
         
-        viewModel.fetchPages {
-            self.viewModel.fetchCharacters {
-                self.characterCollectionView.reloadData()
-            }
+        viewModel.fetchPages()
+        self.viewModel.fetchCharacters {
+            self.characterCollectionView.reloadData()
         }
     }
     
@@ -109,19 +113,20 @@ private extension CharacterViewController {
         view.addSubview(segmentedControl)
     }
     
-    func makeConstaints() {
+    func makeConstraints() {
         characterCollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
         segmentedControl.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(UIConstant.segmentedControlBottomInset)
+            make.bottomMargin.equalToSuperview().inset(UIConstant.segmentedControlBottomInset)
             make.directionalHorizontalEdges.equalToSuperview().inset(UIConstant.segmentedControlSidesInset)
         }
     }
     
     func addTargets() {
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
     }
 
     //MARK: - Objc
@@ -136,6 +141,13 @@ private extension CharacterViewController {
         }
         characterCollectionView.reloadData()
     }
+    
+    @objc func refresh(sender: UIRefreshControl) {
+        viewModel.updateCollectionView {
+            self.characterCollectionView.reloadData()
+        }
+        refreshControl.endRefreshing()
+    }
 }
 
 //MARK: - UITableViewDelegate
@@ -144,12 +156,6 @@ extension CharacterViewController: UICollectionViewDelegate {
         let characterDetailViewController = CharacterDetailViewController()
         characterDetailViewController.viewModel = viewModel.viewModelForSelectedItem(at: indexPath) as? CharacterDetailViewModel
         navigationController?.pushViewController(characterDetailViewController, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        viewModel.updateCollectionView(forItemAt: indexPath) {
-            self.characterCollectionView.reloadData()
-        }
     }
 }
 
@@ -175,20 +181,20 @@ extension CharacterViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let cellWidth = collectionView.frame.width - Constant.InsetOffset.sixteenInsetOffset * 2
+        let cellWidth = collectionView.frame.width - Constant.InsetOffset.l * 2
         
         return CGSize(width: cellWidth, height: UIConstant.cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: Constant.InsetOffset.sixteenInsetOffset,
-                            left: Constant.InsetOffset.sixteenInsetOffset,
-                            bottom: Constant.InsetOffset.sixteenInsetOffset,
-                            right: Constant.InsetOffset.sixteenInsetOffset)
+        return UIEdgeInsets(top: Constant.InsetOffset.l,
+                            left: Constant.InsetOffset.l,
+                            bottom: Constant.InsetOffset.l,
+                            right: Constant.InsetOffset.l)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return Constant.InsetOffset.sixteenInsetOffset
+        return Constant.InsetOffset.l
     }
 }
 

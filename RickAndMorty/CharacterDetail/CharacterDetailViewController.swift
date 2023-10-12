@@ -20,7 +20,7 @@ class CharacterDetailViewController: UIViewController {
             setStatusForFavoriteButton()
             
             nameLabel.text = viewModel?.name
-            spaciesLabel.text = viewModel?.species
+            speciesLabel.text = viewModel?.species
             genderLabel.text = viewModel?.gender
             statusLabel.text = viewModel?.status
             
@@ -39,7 +39,7 @@ class CharacterDetailViewController: UIViewController {
     
     //MARK: - DefaultText
     private enum DefaultText: String {
-        case unknow = "Unknow"
+        case unknown = "Unknow"
         case gender = "Gender:"
         case species = "Species:"
         case status = "Status:"
@@ -50,7 +50,7 @@ class CharacterDetailViewController: UIViewController {
     private let mainImageView: UIImageView = {
         let mainImageView = UIImageView()
         mainImageView.clipsToBounds = true
-        mainImageView.layer.cornerRadius = Constant.CornerRadius.ten
+        mainImageView.layer.cornerRadius = Constant.CornerRadius.s
         mainImageView.contentMode = .scaleAspectFill
         mainImageView.image = Constant.BackgroundImage.image
         return mainImageView
@@ -61,10 +61,10 @@ class CharacterDetailViewController: UIViewController {
         nameLabel.font = .systemFont(ofSize: Constant.FontSize.nameFontSize, weight: .bold)
         nameLabel.clipsToBounds = true
         nameLabel.textAlignment = .center
-        nameLabel.layer.cornerRadius = Constant.CornerRadius.ten
+        nameLabel.layer.cornerRadius = Constant.CornerRadius.s
         nameLabel.backgroundColor = .backgroundGray
         nameLabel.textColor = .textColor
-        nameLabel.text = DefaultText.unknow.rawValue
+        nameLabel.text = DefaultText.unknown.rawValue
         return nameLabel
     }()
     
@@ -72,11 +72,11 @@ class CharacterDetailViewController: UIViewController {
         let characteristicsView = UIView()
         characteristicsView.backgroundColor = .backgroundGray
         characteristicsView.clipsToBounds = true
-        characteristicsView.layer.cornerRadius = Constant.CornerRadius.ten
+        characteristicsView.layer.cornerRadius = Constant.CornerRadius.s
         return characteristicsView
     }()
     
-    private let spaciesTextLabel: UILabel = {
+    private let speciesTextLabel: UILabel = {
         let spaciesTextLabel = UILabel()
         spaciesTextLabel.font = .systemFont(ofSize: Constant.FontSize.descriptionFontSize, weight: .regular)
         spaciesTextLabel.textColor = .textColor
@@ -84,12 +84,12 @@ class CharacterDetailViewController: UIViewController {
         return spaciesTextLabel
     }()
     
-    private let spaciesLabel: UILabel = {
-        let spaciesLabel = UILabel()
-        spaciesLabel.font = .systemFont(ofSize: Constant.FontSize.descriptionFontSize, weight: .regular)
-        spaciesLabel.textColor = .textColor
-        spaciesLabel.text = DefaultText.unknow.rawValue
-        return spaciesLabel
+    private let speciesLabel: UILabel = {
+        let speciesLabel = UILabel()
+        speciesLabel.font = .systemFont(ofSize: Constant.FontSize.descriptionFontSize, weight: .regular)
+        speciesLabel.textColor = .textColor
+        speciesLabel.text = DefaultText.unknown.rawValue
+        return speciesLabel
     }()
     
     private let genderTextLabel: UILabel = {
@@ -104,7 +104,7 @@ class CharacterDetailViewController: UIViewController {
         let genderLabel = UILabel()
         genderLabel.font = .systemFont(ofSize: Constant.FontSize.descriptionFontSize, weight: .regular)
         genderLabel.textColor = .textColor
-        genderLabel.text = DefaultText.unknow.rawValue
+        genderLabel.text = DefaultText.unknown.rawValue
         return genderLabel
     }()
     
@@ -120,7 +120,7 @@ class CharacterDetailViewController: UIViewController {
         let statusLabel = UILabel()
         statusLabel.font = .systemFont(ofSize: Constant.FontSize.descriptionFontSize, weight: .regular)
         statusLabel.textColor = .textColor
-        statusLabel.text = DefaultText.unknow.rawValue
+        statusLabel.text = DefaultText.unknown.rawValue
         return statusLabel
     }()
     
@@ -175,8 +175,8 @@ private extension CharacterDetailViewController {
         characteristicsStackView.addArrangedSubview(genderStackView)
         characteristicsStackView.addArrangedSubview(statusStackView)
         
-        speciesStackView.addArrangedSubview(spaciesTextLabel)
-        speciesStackView.addArrangedSubview(spaciesLabel)
+        speciesStackView.addArrangedSubview(speciesTextLabel)
+        speciesStackView.addArrangedSubview(speciesLabel)
         
         genderStackView.addArrangedSubview(genderTextLabel)
         genderStackView.addArrangedSubview(genderLabel)
@@ -187,8 +187,8 @@ private extension CharacterDetailViewController {
     
     func makeConstraints() {
         mainStackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(Constant.InsetOffset.sixteenInsetOffset)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constant.InsetOffset.sixteenInsetOffset)
+            make.leading.trailing.equalToSuperview().inset(Constant.InsetOffset.l)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constant.InsetOffset.l)
         }
         
         mainImageView.snp.makeConstraints { make in
@@ -204,7 +204,7 @@ private extension CharacterDetailViewController {
         }
         
         characteristicsStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(Constant.InsetOffset.sixteenInsetOffset)
+            make.edges.equalToSuperview().inset(Constant.InsetOffset.l)
         }
     }
     

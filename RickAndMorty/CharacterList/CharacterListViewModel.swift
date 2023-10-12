@@ -16,36 +16,30 @@ protocol CharacterListViewModelProtocol: AnyObject {
     var pages: Int? { get }
     var isFavorites: Bool { get }
 
-    func fetchPages(completion: @escaping () -> Void)
+    func fetchPages()
     func fetchCharacters(completion: @escaping () -> Void)
     func filterCharacters(showFavoritesOnly: Bool, text: String)
     func search(by text: String)
     func numberOfItems() -> Int
     func currentCell(at indexPath: IndexPath) -> Character
     func viewModelForSelectedItem(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol
-    func updateCollectionView(forItemAt indexPath: IndexPath, completion: @escaping () -> Void)
+    func updateCollectionView(completion: @escaping () -> Void)
 }
 
 //MARK: - Class
 final class CharacterListViewModel: CharacterListViewModelProtocol {
     
     var characters: [Character] = []
-    
     var favoritesCharacters: [Character] = []
-    
     var displayedCharacters: [Character] = []
-    
     var currentPage: Int = 1
-    
     var pages: Int?
-    
     var isFavorites: Bool = false
     
-    func fetchPages(completion: @escaping () -> Void) {
+    func fetchPages() {
         NetworkManager.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue, 
                                         dataType: CharacterModel.self) { result in
             self.pages = result.info.pages
-            completion()
         }
     }
     
@@ -57,7 +51,9 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
             self.displayedCharacters = self.characters
         }
         
-        completion()
+        DispatchQueue.main.async {
+            completion()
+        }
     }
     
     func numberOfItems() -> Int {
@@ -107,14 +103,13 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
         return CharacterDetailViewModel(character: character)
     }
     
-    func updateCollectionView(forItemAt indexPath: IndexPath, completion: @escaping () -> Void) {
+    func updateCollectionView(completion: @escaping () -> Void) {
         guard let pages, currentPage <= pages else { return }
         
-        if indexPath.item == (characters.count - 1) {
             self.currentPage += 1
             fetchCharacters {
                 completion()
             }
-        }
+        
     }
 }
