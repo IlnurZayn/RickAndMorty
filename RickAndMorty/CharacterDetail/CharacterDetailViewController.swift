@@ -13,8 +13,9 @@ class CharacterDetailViewController: UIViewController {
     //MARK: - Properties
     var viewModel: CharacterDetailViewModel! {
         didSet {
-            viewModel.viewModelDidChange = { [unowned self] viewModel in
-                setStatusForFavoriteButton()
+            viewModel.viewModelDidChange = { [weak self] viewModel in
+                guard let self else { return }
+                self.setStatusForFavoriteButton()
             }
             
             setStatusForFavoriteButton()

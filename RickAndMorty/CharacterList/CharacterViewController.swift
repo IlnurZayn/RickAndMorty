@@ -97,7 +97,8 @@ private extension CharacterViewController {
         
         viewModel.fetchPagesCount()
         
-        self.viewModel.fetchCharacters {
+        self.viewModel.fetchCharacters { [weak self] in
+            guard let self else { return }
             self.characterCollectionView.reloadData()
         }
     }
@@ -148,7 +149,8 @@ extension CharacterViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        viewModel.loadNextPage(for: indexPath) {
+        viewModel.loadNextPage(for: indexPath) { [weak self] in
+            guard let self else { return }
             self.characterCollectionView.reloadData()
         }
     }
