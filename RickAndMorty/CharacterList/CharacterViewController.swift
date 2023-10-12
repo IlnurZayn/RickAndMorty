@@ -12,7 +12,7 @@ class CharacterViewController: UIViewController {
     //MARK: - UIConstants
     private enum UIConstant {
         static let cellHeight: CGFloat = 80.0
-        static let segmentedControlBottomInset: CGFloat = 50.0
+        static let segmentedControlBottomInset: CGFloat = 25.0
         static let segmentedControlSidesInset: CGFloat = 80.0
         static let segmentsTitles = ["All", "Favorites"]
         static let searchBarPlaceholderText = ["Rick Sanchez", "Morty Smith"]
@@ -57,12 +57,6 @@ class CharacterViewController: UIViewController {
         return segmentedControl
     }()
     
-    private let refreshControl: UIRefreshControl = {
-        let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = .acidColor
-        return refreshControl
-    }()
-    
     //MARK: - Init
     init(viewModel: CharacterListViewModel!) {
         self.viewModel = viewModel
@@ -86,7 +80,7 @@ class CharacterViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel.filterCharacters(showFavoritesOnly: viewModel.isFavorites, text: searchBar.text ?? "")
+        viewModel.filterCharacters(text: searchBar.text ?? "")
         characterCollectionView.reloadData()
     }
 }
@@ -98,11 +92,11 @@ private extension CharacterViewController {
         navigationItem.backButtonTitle = ""
         navigationItem.titleView = searchBar
         
-        characterCollectionView.refreshControl = refreshControl
         characterCollectionView.subscribe(self)
         searchBar.delegate = self
         
-        viewModel.fetchPages()
+        viewModel.fetchPagesCount()
+        
         self.viewModel.fetchCharacters {
             self.characterCollectionView.reloadData()
         }
@@ -126,27 +120,22 @@ private extension CharacterViewController {
     
     func addTargets() {
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
     }
 
     //MARK: - Objc
     @objc func segmentedControlValueChanged(sender: UISegmentedControl) {
+        guard let searchText = searchBar.text else { return }
         switch sender.selectedSegmentIndex {
         case 0:
-            viewModel.filterCharacters(showFavoritesOnly: false, text: searchBar.text ?? "")
+            viewModel.isFavorites = false
+            viewModel.filterCharacters(text: searchText)
         case 1:
-            viewModel.filterCharacters(showFavoritesOnly: true, text: searchBar.text ?? "")
+            viewModel.isFavorites = true
+            viewModel.filterCharacters(text: searchText)
         default:
             break
         }
         characterCollectionView.reloadData()
-    }
-    
-    @objc func refresh(sender: UIRefreshControl) {
-        viewModel.updateCollectionView {
-            self.characterCollectionView.reloadData()
-        }
-        refreshControl.endRefreshing()
     }
 }
 
@@ -156,6 +145,12 @@ extension CharacterViewController: UICollectionViewDelegate {
         let characterDetailViewController = CharacterDetailViewController()
         characterDetailViewController.viewModel = viewModel.viewModelForSelectedItem(at: indexPath) as? CharacterDetailViewModel
         navigationController?.pushViewController(characterDetailViewController, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        viewModel.loadNextPage(for: indexPath) {
+            self.characterCollectionView.reloadData()
+        }
     }
 }
 
@@ -202,20 +197,20 @@ extension CharacterViewController: UICollectionViewDelegateFlowLayout {
 extension CharacterViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
-        viewModel.search(by: "")
+        viewModel.filterCharacters(text: "")
         characterCollectionView.reloadData()
         searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
-        viewModel.search(by: "")
+        viewModel.filterCharacters(text: "")
         characterCollectionView.reloadData()
         searchBar.resignFirstResponder()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        viewModel.search(by: searchText)
+        viewModel.filterCharacters(text: searchText)
         characterCollectionView.reloadData()
     }
 }

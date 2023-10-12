@@ -16,14 +16,14 @@ protocol CharacterListViewModelProtocol: AnyObject {
     var pages: Int? { get }
     var isFavorites: Bool { get }
 
-    func fetchPages()
+    func fetchPagesCount()
     func fetchCharacters(completion: @escaping () -> Void)
-    func filterCharacters(showFavoritesOnly: Bool, text: String)
-    func search(by text: String)
+    func filterCharacters(text: String)
+    func searchCharacter(by text: String) -> [Character]
     func numberOfItems() -> Int
     func currentCell(at indexPath: IndexPath) -> Character
     func viewModelForSelectedItem(at indexPath: IndexPath) -> CharacterDetailViewModelProtocol
-    func updateCollectionView(completion: @escaping () -> Void)
+    func loadNextPage(for indexPath: IndexPath, completion: @escaping () -> Void)
 }
 
 //MARK: - Class
@@ -36,7 +36,7 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
     var pages: Int?
     var isFavorites: Bool = false
     
-    func fetchPages() {
+    func fetchPagesCount() {
         NetworkManager.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue, 
                                         dataType: CharacterModel.self) { result in
             self.pages = result.info.pages
@@ -48,10 +48,8 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
         NetworkManager.shared.fetchData(with: API.baseUrl.rawValue + Endpoint.character.rawValue + Endpoint.page.rawValue + "\(currentPage)",
                                         dataType: CharacterModel.self) { result in
             self.characters.append(contentsOf: result.results)
+            self.favoritesCharacters = self.characters
             self.displayedCharacters = self.characters
-        }
-        
-        DispatchQueue.main.async {
             completion()
         }
     }
@@ -60,38 +58,23 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
         displayedCharacters.count
     }
     
-    func filterCharacters(showFavoritesOnly: Bool, text: String) {
-        if text != "" {
-            if showFavoritesOnly {
-                isFavorites = true
-                favoritesCharacters = characters.filter { DataManager.shared.getFavorites().contains($0.id) }
-                displayedCharacters = favoritesCharacters
-                search(by: text)
-            } else {
-                isFavorites = false
-                search(by: text)
-            }
-        } else {
-            if showFavoritesOnly {
-                favoritesCharacters = characters.filter { DataManager.shared.getFavorites().contains($0.id) }
-                displayedCharacters = favoritesCharacters
-                isFavorites = true
-            } else {
-                displayedCharacters = characters
-                isFavorites = false
-            }
-        }
+    func filterCharacters(text: String) {
+        let characters = searchCharacter(by: text)
+        displayedCharacters = isFavorites ? characters.filter { DataManager.shared.getFavorites().contains($0.id) } : characters
     }
     
-    func search(by text: String) {
-        let filteredAllCharacters = characters.filter { $0.name.lowercased().contains(text.lowercased()) }
-        let filteredFavoritesCharacters = favoritesCharacters.filter { $0.name.lowercased().contains(text.lowercased()) }
+    func searchCharacter(by text: String) -> [Character] {
+        var result = [Character]()
         
-        if text != "" {
-            displayedCharacters = isFavorites ? filteredFavoritesCharacters : filteredAllCharacters
+        if text.isEmpty {
+            result = isFavorites ? favoritesCharacters : characters
         } else {
-            displayedCharacters = isFavorites ? favoritesCharacters : characters
+            let filteredAllCharacters = characters.filter { $0.name.lowercased().contains(text.lowercased()) }
+            let filteredFavoritesCharacters = favoritesCharacters.filter { $0.name.lowercased().contains(text.lowercased()) }
+            result = isFavorites ? filteredFavoritesCharacters : filteredAllCharacters
         }
+        
+        return result
     }
     
     func currentCell(at indexPath: IndexPath) -> Character {
@@ -103,13 +86,14 @@ final class CharacterListViewModel: CharacterListViewModelProtocol {
         return CharacterDetailViewModel(character: character)
     }
     
-    func updateCollectionView(completion: @escaping () -> Void) {
+    func loadNextPage(for indexPath: IndexPath ,completion: @escaping () -> Void) {
         guard let pages, currentPage <= pages else { return }
         
+        if indexPath.item == (characters.count - 1) {
             self.currentPage += 1
             fetchCharacters {
                 completion()
             }
-        
+        }
     }
 }

@@ -16,25 +16,25 @@ final class DataManager {
     
     init() { }
     
-    func setFavoriteStatus(for character: Int) {
+    func setFavoriteStatus(for characterId: Int) {
         guard var values = userDefaults.array(forKey: DataManager.shared.characterIdKey) as? [Int] else {
-            let firstId = [character]
+            let firstId = [characterId]
             userDefaults.set(firstId, forKey: DataManager.shared.characterIdKey)
             return
         }
         
-        values.append(character)
+        values.append(characterId)
         userDefaults.set(values, forKey: DataManager.shared.characterIdKey)
     }
 
-    func getFavoriteStatus(for character: Int) -> Bool {
+    func getFavoriteStatus(for characterId: Int) -> Bool {
         guard let values = userDefaults.array(forKey: DataManager.shared.characterIdKey) as? [Int] else { return false }
-        return values.contains(character)
+        return values.contains(characterId)
     }
     
-    func removeValue(for character: Int) {
+    func removeValue(for characterId: Int) {
         guard var values = userDefaults.array(forKey: DataManager.shared.characterIdKey) as? [Int],
-              let index = values.firstIndex(of: character) else { return }
+              let index = values.firstIndex(of: characterId) else { return }
         values.remove(at: index)
         userDefaults.set(values, forKey: DataManager.shared.characterIdKey)
     }
